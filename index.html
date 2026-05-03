@@ -7,7 +7,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 <meta name="apple-mobile-web-app-title" content="Platoon" />
 <meta name="theme-color" content="#0A0A0B" />
-<title>Platoon — A Vision</title>
+<title>Platoon - A Vision</title>
 
 <!-- Remove no-js class IMMEDIATELY before any CSS computes, so JS-enabled clients animate. -->
 <script>document.documentElement.classList.remove('no-js');</script>
@@ -709,22 +709,24 @@
   .compare table {
     width: 100%;
     border-collapse: collapse;
+    table-layout: fixed;
     font-size: 12px;
   }
   .compare thead {
     background: transparent;
   }
+  /* label column gets the rest, marker columns equal width */
+  .compare col.label-col { width: 38%; }
+  .compare col.marker-col { width: 15.5%; }
   .compare th, .compare td {
-    padding: 11px 6px;
+    padding: 12px 0;
     text-align: center;
     border-bottom: 0.5px solid var(--rule-lt);
+    vertical-align: middle;
   }
   .compare th:first-child, .compare td:first-child {
     text-align: left;
     padding-left: 14px;
-  }
-  .compare td:last-child, .compare th:last-child {
-    padding-right: 14px;
   }
   .compare th {
     font-family: var(--mono);
@@ -742,23 +744,25 @@
   .compare tr:last-child td { border-bottom: none; }
 
   .marker-cell {
-    display: inline-flex;
-    width: 14px; height: 14px;
+    display: inline-block;
+    width: 14px;
+    height: 14px;
     border-radius: 50%;
     background: var(--ink);
+    border: 1.5px solid var(--ink);
+    box-sizing: border-box;
     vertical-align: middle;
   }
   .marker-cell.empty {
     background: transparent;
-    border: 1.5px solid var(--ink);
-    width: 12px; height: 12px;
   }
   .marker-cell.half {
     background: linear-gradient(90deg, var(--ink) 50%, transparent 50%);
-    border: 1.5px solid var(--ink);
-    width: 12px; height: 12px;
   }
-  .marker-cell.us { background: var(--hot); }
+  .marker-cell.us {
+    background: var(--hot);
+    border-color: var(--hot);
+  }
 
   .compare-legend {
     display: flex;
@@ -1021,6 +1025,132 @@
   }
   section.dark .footnote { border-top-color: var(--rule); color: var(--muted); }
 
+  /* ---------- two-tier section (cohort + platform) ---------- */
+  .tier-stack { margin-top: 8px; }
+  .tier-card {
+    border-radius: 22px;
+    padding: 26px 22px;
+    margin-bottom: 12px;
+    position: relative;
+    overflow: hidden;
+  }
+  .tier-card.cohort {
+    background: var(--ink);
+    color: var(--paper);
+  }
+  .tier-card.cohort::before {
+    content: "";
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 4px;
+    background: var(--hot);
+  }
+  .tier-card.platform {
+    background: #fff;
+    border: 1px solid var(--rule-lt);
+  }
+  .tier-card .label {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    color: var(--hot);
+    font-weight: 600;
+    margin-bottom: 6px;
+    text-transform: uppercase;
+  }
+  .tier-card .vol {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.05em;
+    margin-bottom: 14px;
+  }
+  .tier-card.platform .vol { color: var(--muted-lt); }
+  .tier-card h3 {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: 26px;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    margin-bottom: 10px;
+    font-variation-settings: "opsz" 144;
+  }
+  .tier-card .desc {
+    font-size: 14px;
+    line-height: 1.55;
+    margin-bottom: 16px;
+  }
+  .tier-card.cohort .desc { color: var(--muted); }
+  .tier-card.platform .desc { color: var(--muted-lt); }
+  .tier-card ul { list-style: none; padding: 0; margin: 0; }
+  .tier-card li {
+    font-size: 13px;
+    line-height: 1.45;
+    padding: 6px 0 6px 18px;
+    position: relative;
+  }
+  .tier-card.cohort li { color: var(--muted); }
+  .tier-card.platform li { color: var(--muted-lt); }
+  .tier-card li::before {
+    content: "";
+    position: absolute;
+    left: 0; top: 14px;
+    width: 10px; height: 2px;
+    background: var(--hot);
+  }
+  .tier-card li strong { color: inherit; }
+  .tier-card.cohort li strong { color: var(--paper); }
+  .tier-card.platform li strong { color: var(--ink); }
+
+  /* graduation indicator between the two tier cards */
+  .tier-arrow {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin: 18px 4px;
+    font-family: var(--mono);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--muted-lt);
+  }
+  .tier-arrow .line {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--hot), transparent);
+  }
+  .tier-arrow .arrow-up { color: var(--hot); font-size: 14px; }
+
+  /* the unifying "one OS" footer pill */
+  .one-os {
+    margin-top: 8px;
+    background: var(--paper-2);
+    border-radius: 18px;
+    padding: 18px 20px;
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+  }
+  .one-os .pill {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--hot);
+    font-weight: 600;
+    flex-shrink: 0;
+    padding-top: 1px;
+  }
+  .one-os .body {
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--muted-lt);
+  }
+  .one-os .body strong {
+    color: var(--ink);
+    font-weight: 600;
+  }
+
   /* ============================================================
      MOBILE OVERRIDES (placed last so they win the cascade).
      On mobile we kill the desktop phone frame entirely and let
@@ -1067,34 +1197,27 @@
       overflow: visible;
       width: 100%;
     }
-    /* status bar and nav: fixed to viewport, NOT sticky inside an inner scroller */
-    .status-bar {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      width: 100%;
-      padding-top: max(env(safe-area-inset-top, 12px), 12px);
-      height: calc(54px + env(safe-area-inset-top, 0px));
-      z-index: 100;
-    }
+    /* On a real iPhone, iOS draws its own status bar above the page.
+       Our fake status bar would be a duplicate, so we hide it on mobile. */
+    .status-bar { display: none; }
+    /* Without the fake status bar, the nav sits at the very top */
     .nav {
       position: fixed;
-      top: calc(54px + env(safe-area-inset-top, 0px));
+      top: env(safe-area-inset-top, 0px);
       left: 0;
       right: 0;
       width: 100%;
       z-index: 99;
     }
-    /* push cover content down to clear the fixed status bar + nav */
+    /* push cover content down to clear just the fixed nav */
     .cover {
-      padding-top: calc(98px + env(safe-area-inset-top, 0px) + 60px);
+      padding-top: calc(44px + env(safe-area-inset-top, 0px) + 60px);
       min-height: calc(100vh - 100px);
       min-height: calc(100svh - 100px);
     }
     /* sections after cover need a top buffer for nav clearance on jump-to */
     section:not(.cover) {
-      scroll-margin-top: calc(98px + env(safe-area-inset-top, 0px));
+      scroll-margin-top: calc(44px + env(safe-area-inset-top, 0px));
     }
     /* drop nav blur on iOS (perf + occasional rendering glitches) */
     .nav {
@@ -1153,7 +1276,7 @@
               <span class="num">00</span><span>OPENING</span>
             </div>
             <h1 class="cover-headline reveal" style="--d: 250ms">
-              My vision<br/>for <em>Platoon</em>.
+              Platoon can evolve into the <em>cultural leader</em>.
             </h1>
             <p class="cover-sub reveal" style="--d: 500ms">
               Distribution is the floor. The ceiling is artist development inside the world's most powerful consumer ecosystem, built on tech that doesn't exist yet.
@@ -1163,7 +1286,6 @@
             <span>May 2026</span>
             <span>scroll &darr;</span>
           </div>
-          <div class="scroll-cue"><span>scroll</span><span class="arrow"></span></div>
         </section>
         <div class="home-indicator" style="background:var(--ink)"><div class="bar"></div></div>
 
@@ -1172,13 +1294,13 @@
           <div class="eyebrow reveal"><span class="num">01</span><span>The Moment</span></div>
           <h2 class="section-title reveal" style="--d:80ms">Platoon was built for a different era.</h2>
           <p class="lede reveal" style="--d:160ms">
-            Founded 2016. Acquired by Apple 2018. The thesis (find emerging artists, give them tools and capital, get out of the way) was right for its time. Today, three forces have changed what "artist services" should mean.
+            Founded 2016. Acquired in 2018. Today, three forces have changed what "artist services" should mean, and Platoon have the resources to adapt to all three faster than anyone else.
           </p>
 
           <div class="moment-card reveal" style="--d:220ms">
             <div class="n">i.</div>
             <h3>AI collapses A&amp;R</h3>
-            <p>Anyone with a laptop can find a viral artist. Scouting on TikTok metrics is now table stakes &mdash; and a commodity.</p>
+            <p>Anyone with a laptop can find a viral artist. Scouting on TikTok metrics is now table stakes - and a commodity.</p>
           </div>
           <div class="moment-card reveal" style="--d:300ms">
             <div class="n">ii.</div>
@@ -1188,7 +1310,7 @@
           <div class="moment-card reveal" style="--d:380ms">
             <div class="n">iii.</div>
             <h3>Fans want ownership, not feeds</h3>
-            <p>Substack, Patreon, Discord, group chats. The relationship between artist and fan is moving direct &mdash; and Apple owns the device.</p>
+            <p>Substack, Patreon, Discord, group chats. The relationship between artist and fan is moving direct - and Apple owns the device.</p>
           </div>
         </section>
         <div class="home-indicator"><div class="bar"></div></div>
@@ -1234,7 +1356,7 @@
           </div>
 
           <div class="panel dark reveal" style="--d:300ms">
-            <div class="panel-label">Missing</div>
+            <div class="panel-label">Missing (I think)</div>
             <div class="item-row">
               <div class="item-marker square"></div>
               <div class="item-text"><strong>A&amp;R signal layer</strong><span>No proprietary discovery. Same TikTok charts everyone watches.</span></div>
@@ -1289,7 +1411,7 @@
           <div class="eyebrow reveal"><span class="num">04</span><span>Pillar I &middot; Ecosystem A&amp;R</span></div>
           <h2 class="section-title reveal" style="--d:80ms">Sign for leverage, not for hype.</h2>
           <p class="lede reveal" style="--d:160ms">
-            Stop signing the same artists every label is chasing on TikTok. Sign artists where Apple's ecosystem is the unfair advantage. Every signing comes with a 3-5 year plan, mapped to specific services.
+            Sign artists where Apple's ecosystem is the unfair advantage. Every signing comes with a 3-5 year plan, mapped to specific services.
           </p>
 
           <div class="ecosystem reveal" style="--d:220ms">
@@ -1427,9 +1549,57 @@
         </section>
         <div class="home-indicator" style="background:var(--ink)"><div class="bar"></div></div>
 
+        <!-- TWO TIERS -->
+        <section class="warm">
+          <div class="eyebrow reveal"><span class="num">07</span><span>Two Tiers, One OS</span></div>
+          <h2 class="section-title reveal" style="--d:80ms">Curate at the top. Build a <em>platform</em> underneath.</h2>
+          <p class="lede reveal" style="--d:160ms">
+            A boutique-only label limits its own ambition. The same Artist OS that develops a curated cohort can serve thousands of independents, with technology doing the lifting humans can't scale to. Two distinct products, one tech stack, one feeder pipeline.
+          </p>
+
+          <div class="tier-stack">
+            <div class="tier-card cohort reveal" style="--d:220ms">
+              <div class="label">Tier 1 &middot; The Cohort</div>
+              <div class="vol">~10 artists / year</div>
+              <h3>Apple's prestige roster.</h3>
+              <p class="desc">Hand-picked. Heavy human touch. Apple's full ecosystem behind every signing.</p>
+              <ul>
+                <li><strong>Bespoke 3-5 year plans</strong> mapped to TV+, Fitness+, Beats, Shazam, devices.</li>
+                <li><strong>Significant capital</strong> behind each artist for production, touring, marketing.</li>
+                <li><strong>Editorial &amp; sync as a service</strong>: Platoon's Apple relationships are the moat.</li>
+              </ul>
+            </div>
+
+            <div class="tier-arrow reveal" style="--d:280ms">
+              <span>Graduation</span>
+              <span class="line"></span>
+              <span class="arrow-up">&uarr;</span>
+              <span>Signal-driven</span>
+            </div>
+
+            <div class="tier-card platform reveal" style="--d:340ms">
+              <div class="label">Tier 2 &middot; The Platform</div>
+              <div class="vol">500+ artists / year, scaling to thousands</div>
+              <h3>Tech-led artist development.</h3>
+              <p class="desc">Open application. Same Artist OS. Algorithmic routing. Humans intervene only where the data justifies it.</p>
+              <ul>
+                <li><strong>Self-serve onboarding</strong> with the same OS the cohort uses.</li>
+                <li><strong>Automated opportunity routing</strong>: sync briefs, playlist pitching, marketing spend triggered when traction crosses thresholds.</li>
+                <li><strong>Artists who break through graduate up</strong>. The platform is the cohort's discovery engine.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="one-os reveal" style="--d:420ms">
+            <span class="pill">One OS</span>
+            <span class="body"><strong>The same product powers both tiers.</strong> That's what makes the volume play economically sane and strategically coherent. The OS investment pays for itself twice.</span>
+          </div>
+        </section>
+        <div class="home-indicator"><div class="bar"></div></div>
+
         <!-- COMPETITIVE -->
         <section>
-          <div class="eyebrow reveal"><span class="num">07</span><span>Competitive Position</span></div>
+          <div class="eyebrow reveal"><span class="num">08</span><span>Competitive Position</span></div>
           <h2 class="section-title reveal" style="--d:80ms">Why this wins.</h2>
           <p class="lede reveal" style="--d:160ms">
             Every player in the artist services market is fighting on price or hustle. None of them have what Platoon has, and what's proposed here can't be replicated.
@@ -1437,6 +1607,13 @@
 
           <div class="compare reveal" style="--d:220ms">
             <table>
+              <colgroup>
+                <col class="label-col" />
+                <col class="marker-col" />
+                <col class="marker-col" />
+                <col class="marker-col" />
+                <col class="marker-col" />
+              </colgroup>
               <thead>
                 <tr>
                   <th>Capability</th>
@@ -1466,8 +1643,8 @@
 
         <!-- HORIZON -->
         <section class="warm">
-          <div class="eyebrow reveal"><span class="num">08</span><span>Horizon</span></div>
-          <h2 class="section-title reveal" style="--d:80ms">Three years to make Platoon the most envied label in music.</h2>
+          <div class="eyebrow reveal"><span class="num">09</span><span>Horizon</span></div>
+          <h2 class="section-title reveal" style="--d:80ms">Three years to make Platoon the place that shapes culture in music.</h2>
 
           <div class="year-card reveal" style="--d:160ms">
             <div class="top"></div>
@@ -1479,6 +1656,7 @@
                 <li>Onboard managers, sync agents, label teams onto a single calendar.</li>
                 <li>Run first 5 ecosystem-orchestrated campaigns.</li>
                 <li>Quietly sign 10 cohort artists on new deal tiers.</li>
+                <li>Open Platform tier in private beta to 100 hand-picked independents.</li>
               </ul>
             </div>
           </div>
@@ -1489,9 +1667,10 @@
               <div class="label">Year 2</div>
               <h3>Prove leverage.</h3>
               <ul>
-                <li>First 'made by Platoon' breakout, driven by sync + Beats + automated spend.</li>
+                <li>First 'made by Platoon' cohort breakout, driven by sync + Beats + automated spend.</li>
+                <li>Platform tier opens publicly. Scale to 1,000+ independent artists.</li>
+                <li>First Platform-to-Cohort graduation (an artist signal-promoted into full Apple support).</li>
                 <li>D2F pilot via iMessage Business with 3 artists.</li>
-                <li>Open Artist OS to select third-party managers.</li>
               </ul>
             </div>
           </div>
@@ -1503,7 +1682,8 @@
               <h3>Re-set the market.</h3>
               <ul>
                 <li>The destination for emerging artists who want Apple's full force.</li>
-                <li>D2F live across roster, recurring fan revenue.</li>
+                <li>Platform tier at scale. The largest tech-led discovery engine in music.</li>
+                <li>D2F live across both tiers, recurring fan revenue.</li>
                 <li>Major labels approach for distribution + tooling licensing.</li>
               </ul>
             </div>
@@ -1513,7 +1693,7 @@
 
         <!-- CLOSE -->
         <section class="close">
-          <div class="eyebrow reveal" style="color:var(--muted)"><span class="num">09</span><span>Close</span></div>
+          <div class="eyebrow reveal" style="color:var(--muted)"><span class="num">10</span><span>Close</span></div>
           <h1 class="reveal" style="--d:80ms">These are <em>my thoughts</em>.</h1>
           <p class="happy reveal" style="--d:240ms">Happy to discuss.</p>
           <p class="email reveal" style="--d:340ms"><a href="mailto:Alex@unhurd.com">Alex@unhurd.com</a></p>
