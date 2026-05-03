@@ -1,0 +1,1706 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<meta name="apple-mobile-web-app-title" content="Platoon" />
+<meta name="theme-color" content="#0A0A0B" />
+<title>Platoon — A Vision</title>
+
+<!-- Remove no-js class IMMEDIATELY before any CSS computes, so JS-enabled clients animate. -->
+<script>document.documentElement.classList.remove('no-js');</script>
+<noscript><style>.reveal { opacity: 1 !important; transform: none !important; }</style></noscript>
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+<style>
+  /* ---------- design tokens ---------- */
+  :root {
+    --ink: #0A0A0B;
+    --paper: #FAFAF7;
+    --paper-2: #F2EFE6;
+    --graph: #15151A;
+    --graph-2: #1E1E24;
+    --rule: #2A2A2D;
+    --rule-lt: #E6E4DC;
+    --muted: #8A8A8E;
+    --muted-lt: #5A5A60;
+    --hot: #FF4E3A;
+    --amber: #F2A93B;
+    --serif: 'Fraunces', 'Times New Roman', serif;
+    --sans: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Text', system-ui, sans-serif;
+    --mono: 'JetBrains Mono', 'SF Mono', Menlo, monospace;
+    --frame-w: 393px; /* iPhone 15 Pro logical width */
+    --frame-h: 852px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+  html { height: 100%; overflow-x: hidden; scroll-behavior: smooth; }
+  body {
+    font-family: var(--sans);
+    color: var(--ink);
+    background: #1a1a1d; /* desktop bezel background */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    overscroll-behavior-y: contain;
+    overflow-x: hidden;
+  }
+
+  /* ---------- desktop: phone frame mockup ---------- */
+  /* On wider screens, render the experience inside a phone frame on a dark stage.
+     On mobile-sized viewports, the frame elements collapse and the document scrolls natively. */
+
+  .stage {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 48px 24px;
+    background:
+      radial-gradient(ellipse at center top, rgba(255, 78, 58, 0.08), transparent 60%),
+      radial-gradient(ellipse at center bottom, rgba(255, 78, 58, 0.04), transparent 50%),
+      #0e0e10;
+  }
+
+  .stage-meta {
+    position: fixed;
+    top: 24px;
+    left: 24px;
+    color: var(--muted);
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    z-index: 100;
+    pointer-events: none;
+  }
+  .stage-meta strong { color: var(--paper); font-weight: 500; }
+
+  .stage-hint {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: var(--muted);
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    z-index: 100;
+    pointer-events: none;
+    opacity: 0.7;
+  }
+
+  .phone {
+    width: var(--frame-w);
+    height: var(--frame-h);
+    max-height: calc(100vh - 96px);
+    border-radius: 56px;
+    background: #000;
+    padding: 12px;
+    box-shadow:
+      0 0 0 2px #2a2a2e,
+      0 0 0 3px #0a0a0b,
+      0 50px 100px -30px rgba(0,0,0,0.8),
+      0 30px 60px -20px rgba(255, 78, 58, 0.15);
+    position: relative;
+  }
+  .phone::before {
+    /* dynamic island */
+    content: "";
+    position: absolute;
+    top: 22px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 120px;
+    height: 36px;
+    background: #000;
+    border-radius: 20px;
+    z-index: 50;
+    pointer-events: none;
+  }
+
+  .screen {
+    width: 100%;
+    height: 100%;
+    border-radius: 44px;
+    overflow: hidden;
+    background: var(--paper);
+    position: relative;
+  }
+
+  /* The actual scrollable app content (DESKTOP ONLY - inner scroll inside phone frame) */
+  .app {
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+    background: var(--paper);
+    position: relative;
+  }
+  .app::-webkit-scrollbar { display: none; }
+
+  /* ---------- iOS-like top status bar (visible inside the screen) ---------- */
+  .status-bar {
+    position: sticky;
+    top: 0;
+    z-index: 40;
+    background: var(--paper);
+    height: 54px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    padding: 0 28px 6px;
+    font-family: var(--sans);
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--ink);
+    transition: background 0.4s ease, color 0.4s ease;
+  }
+  .status-bar.dark {
+    background: var(--ink);
+    color: var(--paper);
+  }
+  .status-bar .time {
+    font-variant-numeric: tabular-nums;
+  }
+  .status-bar .right {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  /* signal / wifi / battery - mini SVG icons */
+  .status-bar svg { display: block; }
+
+  /* sticky app header that appears below status bar */
+  .nav {
+    position: sticky;
+    top: 54px;
+    z-index: 39;
+    background: rgba(250, 250, 247, 0.85);
+    backdrop-filter: saturate(180%) blur(20px);
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    border-bottom: 0.5px solid transparent;
+    transition: background 0.4s ease, border-color 0.4s ease, color 0.4s ease;
+  }
+  .nav.scrolled {
+    border-bottom-color: rgba(0,0,0,0.08);
+  }
+  .nav.dark {
+    background: rgba(10, 10, 11, 0.85);
+    color: var(--paper);
+  }
+  .nav.dark.scrolled { border-bottom-color: rgba(255,255,255,0.08); }
+
+  .nav-mark {
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+  .nav-meta {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted-lt);
+  }
+  .nav.dark .nav-meta { color: var(--muted); }
+
+  /* ---------- content sections ---------- */
+  section {
+    padding: 64px 28px 56px;
+    position: relative;
+    transition: background 0.4s ease, color 0.4s ease;
+  }
+  section.dark {
+    background: var(--ink);
+    color: var(--paper);
+  }
+  section.warm {
+    background: var(--paper-2);
+  }
+
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted-lt);
+    margin-bottom: 28px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .dark .eyebrow { color: var(--muted); }
+  .eyebrow .num { color: var(--hot); font-weight: 600; }
+
+  /* Big serif display headline */
+  h1.display {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: clamp(40px, 11vw, 56px);
+    line-height: 0.96;
+    letter-spacing: -0.025em;
+    margin: 0 0 28px;
+    font-variation-settings: "opsz" 144;
+  }
+  h1.display em {
+    color: var(--hot);
+    font-style: italic;
+    font-weight: 400;
+  }
+
+  h2.section-title {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: clamp(30px, 8vw, 38px);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    margin: 0 0 20px;
+    font-variation-settings: "opsz" 144;
+  }
+  h2.section-title em {
+    color: var(--hot);
+    font-style: italic;
+  }
+
+  p.lede {
+    font-family: var(--sans);
+    font-size: 16px;
+    line-height: 1.55;
+    color: var(--muted-lt);
+    margin: 0 0 24px;
+    font-weight: 400;
+  }
+  .dark p.lede { color: var(--muted); }
+
+  /* ---------- COVER ---------- */
+  .cover {
+    background: var(--ink);
+    color: var(--paper);
+    min-height: calc(var(--frame-h) - 140px);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding-top: 80px;
+    padding-bottom: 56px;
+  }
+  @media (max-width: 768px) {
+    .cover {
+      min-height: calc(100vh - 100px);
+      min-height: calc(100svh - 100px);
+    }
+  }
+  .cover-headline {
+    font-family: var(--serif);
+    font-size: clamp(56px, 16vw, 76px);
+    line-height: 0.94;
+    font-weight: 400;
+    letter-spacing: -0.035em;
+    font-variation-settings: "opsz" 144;
+  }
+  .cover-headline em {
+    color: var(--hot);
+    font-style: italic;
+  }
+  .cover-sub {
+    font-size: 16px;
+    line-height: 1.5;
+    color: var(--muted);
+    max-width: 340px;
+    margin-top: 36px;
+  }
+  .cover-foot {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    border-top: 1px solid var(--rule);
+    padding-top: 18px;
+  }
+
+  /* scroll cue */
+  .scroll-cue {
+    position: absolute;
+    left: 50%;
+    bottom: 88px;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    color: var(--muted);
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    animation: cueFloat 2.4s ease-in-out infinite;
+    pointer-events: none;
+  }
+  .scroll-cue .arrow {
+    width: 1px;
+    height: 28px;
+    background: linear-gradient(to bottom, transparent, var(--muted));
+  }
+  @keyframes cueFloat {
+    0%, 100% { transform: translateX(-50%) translateY(0); opacity: 0.5; }
+    50%      { transform: translateX(-50%) translateY(6px); opacity: 0.9; }
+  }
+
+  /* ---------- AUDIT (has/missing) ---------- */
+  .panel {
+    background: #fff;
+    border: 1px solid var(--rule-lt);
+    border-radius: 22px;
+    padding: 22px;
+    margin-bottom: 14px;
+  }
+  .panel.dark {
+    background: var(--graph);
+    border-color: var(--rule);
+    color: var(--paper);
+  }
+  .panel-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted-lt);
+    margin-bottom: 16px;
+    font-weight: 600;
+  }
+  .panel.dark .panel-label { color: var(--hot); }
+
+  .item-row {
+    display: flex;
+    gap: 12px;
+    padding: 10px 0;
+    align-items: flex-start;
+  }
+  .item-row + .item-row {
+    border-top: 1px solid rgba(0,0,0,0.06);
+  }
+  .panel.dark .item-row + .item-row {
+    border-top-color: rgba(255,255,255,0.06);
+  }
+  .item-marker {
+    flex-shrink: 0;
+    width: 14px;
+    height: 14px;
+    margin-top: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .item-marker.check { color: var(--hot); }
+  .item-marker.square {
+    width: 9px; height: 9px;
+    background: var(--hot);
+    border-radius: 1px;
+    margin-top: 7px;
+  }
+  .item-text { font-size: 14px; line-height: 1.5; }
+  .item-text strong { color: var(--ink); font-weight: 600; display: block; margin-bottom: 2px; }
+  .panel.dark .item-text strong { color: var(--paper); }
+  .item-text span { color: var(--muted-lt); }
+  .panel.dark .item-text span { color: var(--muted); }
+
+  /* ---------- pillars cards ---------- */
+  .pillar-card {
+    background: #fff;
+    border: 1px solid var(--rule-lt);
+    border-radius: 22px;
+    padding: 24px;
+    margin-bottom: 14px;
+    transition: transform 0.2s ease;
+  }
+  section.dark .pillar-card {
+    background: var(--graph);
+    border-color: var(--rule);
+  }
+  .pillar-card .num {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--hot);
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    margin-bottom: 12px;
+  }
+  .pillar-card h3 {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 1.1;
+    letter-spacing: -0.015em;
+    margin-bottom: 10px;
+    font-variation-settings: "opsz" 144;
+  }
+  section.dark .pillar-card h3 { color: var(--paper); }
+  .pillar-card p {
+    font-size: 14px;
+    line-height: 1.55;
+    color: var(--muted-lt);
+  }
+  section.dark .pillar-card p { color: var(--muted); }
+
+  /* ---------- ecosystem map (Pillar I) ---------- */
+  .ecosystem {
+    margin-top: 8px;
+  }
+  .ecosystem-hub {
+    background: var(--ink);
+    color: var(--paper);
+    border-radius: 22px;
+    padding: 22px;
+    margin-bottom: 12px;
+    position: relative;
+    overflow: hidden;
+  }
+  .ecosystem-hub::before {
+    content: "";
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 4px;
+    background: var(--hot);
+  }
+  .ecosystem-hub .label {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    color: var(--hot);
+    margin-bottom: 8px;
+  }
+  .ecosystem-hub h4 {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: 28px;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    margin-bottom: 6px;
+    font-variation-settings: "opsz" 144;
+  }
+  .ecosystem-hub small { color: var(--muted); font-size: 12px; }
+
+  .surfaces {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+  .surface {
+    background: #fff;
+    border: 1px solid var(--rule-lt);
+    border-radius: 14px;
+    padding: 12px 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    line-height: 1.2;
+    min-height: 56px;
+  }
+  .surface .icon {
+    width: 22px; height: 22px;
+    color: var(--hot);
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* the OS (centerpiece) */
+  .os-shell {
+    background: var(--ink);
+    border-radius: 22px;
+    padding: 12px;
+    margin-top: 12px;
+    box-shadow: 0 18px 48px -16px rgba(0,0,0,0.4);
+    overflow: hidden;
+  }
+  .os-shell .chrome {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 4px 6px 12px;
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--muted);
+  }
+  .os-shell .chrome .dots {
+    display: flex; gap: 5px;
+  }
+  .os-shell .chrome .dot {
+    width: 9px; height: 9px; border-radius: 50%;
+  }
+  .os-screen {
+    background: var(--graph);
+    border-radius: 14px;
+    padding: 16px 12px;
+    color: var(--paper);
+    min-height: 360px;
+  }
+  .os-meta {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    color: var(--muted);
+    margin-bottom: 6px;
+  }
+  .os-title {
+    font-family: var(--serif);
+    font-size: 18px;
+    font-weight: 400;
+    margin-bottom: 16px;
+    letter-spacing: -0.01em;
+    font-variation-settings: "opsz" 144;
+  }
+  .os-title em { color: var(--hot); font-style: normal; }
+
+  /* calendar - constrain to fit */
+  .cal-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 2px;
+    font-family: var(--mono);
+    width: 100%;
+  }
+  .cal-h {
+    text-align: center;
+    font-size: 8px;
+    color: var(--muted);
+    padding: 4px 0;
+    letter-spacing: 0.05em;
+  }
+  .cal-cell {
+    background: #1a1a20;
+    border-radius: 5px;
+    padding: 3px 2px 3px;
+    min-height: 38px;
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+    border: 1px solid transparent;
+    transition: border-color 0.2s ease, background 0.2s ease;
+    overflow: hidden;
+    min-width: 0;
+  }
+  .cal-cell.has-event { background: #1f1f26; }
+  .cal-cell.has-event:active { background: #28282f; }
+  .cal-cell.empty { background: transparent; cursor: default; }
+  .cal-cell .day {
+    font-size: 8px;
+    color: var(--muted);
+    line-height: 1;
+  }
+  .cal-cell .chip {
+    margin-top: 3px;
+    font-size: 7px;
+    line-height: 1;
+    padding: 2px 2px;
+    border-radius: 2px;
+    font-family: var(--sans);
+    font-weight: 600;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    min-width: 0;
+  }
+  .chip.live { background: var(--hot); color: var(--paper); }
+  .chip.queued { background: var(--amber); color: var(--ink); }
+  .chip.planned { background: #383840; color: var(--paper); }
+
+  .cal-legend {
+    display: flex;
+    gap: 14px;
+    margin-top: 14px;
+    font-family: var(--mono);
+    font-size: 9px;
+    color: var(--muted);
+    align-items: center;
+  }
+  .cal-legend span {
+    display: inline-flex; align-items: center; gap: 5px;
+  }
+  .cal-legend .sw {
+    width: 8px; height: 8px; border-radius: 2px;
+  }
+
+  /* event detail card (revealed when tapping a calendar cell) */
+  .event-detail {
+    margin-top: 14px;
+    background: #14141a;
+    border: 1px solid var(--rule);
+    border-radius: 12px;
+    padding: 14px;
+    display: none;
+    animation: detailIn 0.3s ease;
+  }
+  .event-detail.show { display: block; }
+  @keyframes detailIn {
+    from { opacity: 0; transform: translateY(4px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .event-detail .ed-meta {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    color: var(--hot);
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .event-detail .ed-title {
+    font-family: var(--serif);
+    font-size: 17px;
+    font-weight: 400;
+    margin-bottom: 6px;
+    color: var(--paper);
+    font-variation-settings: "opsz" 144;
+  }
+  .event-detail .ed-body {
+    font-size: 12px;
+    line-height: 1.5;
+    color: var(--muted);
+  }
+
+  /* OS feature list below the mockup */
+  .os-features { margin-top: 20px; }
+  .os-feature {
+    border-left: 3px solid var(--hot);
+    padding: 4px 0 4px 14px;
+    margin-bottom: 18px;
+  }
+  .os-feature h4 {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: 17px;
+    margin-bottom: 4px;
+    letter-spacing: -0.01em;
+    font-variation-settings: "opsz" 144;
+  }
+  .os-feature p {
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--muted-lt);
+  }
+
+  /* ---------- competitive table ---------- */
+  .compare {
+    background: #fff;
+    border: 1px solid var(--rule-lt);
+    border-radius: 22px;
+    overflow: hidden;
+  }
+  .compare table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+  }
+  .compare thead {
+    background: transparent;
+  }
+  .compare th, .compare td {
+    padding: 11px 6px;
+    text-align: center;
+    border-bottom: 0.5px solid var(--rule-lt);
+  }
+  .compare th:first-child, .compare td:first-child {
+    text-align: left;
+    padding-left: 14px;
+  }
+  .compare td:last-child, .compare th:last-child {
+    padding-right: 14px;
+  }
+  .compare th {
+    font-family: var(--mono);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--muted-lt);
+    font-weight: 600;
+    padding-bottom: 14px;
+    padding-top: 14px;
+  }
+  .compare th.us { color: var(--hot); }
+  .compare td.label { font-weight: 600; color: var(--ink); font-size: 13px; font-family: var(--sans); }
+  .compare tr:nth-child(even) td { background: var(--paper-2); }
+  .compare tr:last-child td { border-bottom: none; }
+
+  .marker-cell {
+    display: inline-flex;
+    width: 14px; height: 14px;
+    border-radius: 50%;
+    background: var(--ink);
+    vertical-align: middle;
+  }
+  .marker-cell.empty {
+    background: transparent;
+    border: 1.5px solid var(--ink);
+    width: 12px; height: 12px;
+  }
+  .marker-cell.half {
+    background: linear-gradient(90deg, var(--ink) 50%, transparent 50%);
+    border: 1.5px solid var(--ink);
+    width: 12px; height: 12px;
+  }
+  .marker-cell.us { background: var(--hot); }
+
+  .compare-legend {
+    display: flex;
+    gap: 14px;
+    padding: 10px 14px 12px;
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--muted-lt);
+    border-top: 0.5px solid var(--rule-lt);
+    align-items: center;
+  }
+  .compare-legend span {
+    display: inline-flex; align-items: center; gap: 5px;
+  }
+
+  /* ---------- horizon (Y1/Y2/Y3) ---------- */
+  .year-card {
+    background: #fff;
+    border: 1px solid var(--rule-lt);
+    border-radius: 22px;
+    margin-bottom: 14px;
+    overflow: hidden;
+  }
+  .year-card .top {
+    height: 4px;
+    background: var(--hot);
+  }
+  .year-card .body {
+    padding: 22px 22px 24px;
+  }
+  .year-card .label {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    color: var(--hot);
+    font-weight: 600;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+  }
+  .year-card h3 {
+    font-family: var(--serif);
+    font-size: 22px;
+    font-weight: 400;
+    letter-spacing: -0.015em;
+    margin-bottom: 18px;
+    font-variation-settings: "opsz" 144;
+  }
+  .year-card ul { list-style: none; }
+  .year-card li {
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--muted-lt);
+    padding: 8px 0 8px 18px;
+    position: relative;
+  }
+  .year-card li::before {
+    content: "";
+    position: absolute;
+    left: 0; top: 16px;
+    width: 10px; height: 2px;
+    background: var(--hot);
+  }
+
+  /* ---------- close ---------- */
+  .close {
+    background: var(--ink);
+    color: var(--paper);
+    min-height: 60vh;
+    min-height: 60svh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 80px 28px 100px;
+  }
+  .close h1 {
+    font-family: var(--serif);
+    font-size: clamp(40px, 11vw, 56px);
+    line-height: 0.95;
+    font-weight: 400;
+    letter-spacing: -0.025em;
+    font-variation-settings: "opsz" 144;
+  }
+  .close h1 em {
+    color: var(--hot);
+    font-style: italic;
+  }
+  .close .happy {
+    margin-top: 36px;
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 17px;
+    color: var(--muted);
+  }
+  .close .email {
+    margin-top: 14px;
+    font-family: var(--mono);
+    font-size: 14px;
+    color: var(--hot);
+    letter-spacing: 0.05em;
+  }
+  .close a {
+    color: inherit;
+    text-decoration: none;
+    border-bottom: 1px solid rgba(255, 78, 58, 0.3);
+    padding-bottom: 1px;
+    transition: border-color 0.2s ease;
+  }
+  .close a:active { border-color: var(--hot); }
+
+  /* page footer (home indicator zone) - acts as a subtle section divider */
+  .home-indicator {
+    height: 18px;
+    background: inherit;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+  }
+  .home-indicator .bar {
+    width: 100px;
+    height: 3px;
+    border-radius: 2px;
+    background: rgba(0,0,0,0.18);
+  }
+  section.dark + .home-indicator .bar,
+  .close + .home-indicator .bar,
+  .cover + .home-indicator .bar {
+    background: rgba(255,255,255,0.25);
+  }
+
+  /* ---------- reveal-on-scroll (subtle fade & rise) ---------- */
+  .reveal {
+    opacity: 0;
+    transform: translateY(14px);
+    transition: opacity 0.7s cubic-bezier(.2,.7,.2,1), transform 0.7s cubic-bezier(.2,.7,.2,1);
+    transition-delay: var(--d, 0ms);
+  }
+  .reveal.in {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  /* hero text reveals on load */
+  .cover .reveal { transition-delay: var(--d, 200ms); }
+
+  /* No-JS fallback: if scripts are disabled (e.g. iOS Files preview, RSS readers,
+     server-side rendering), show everything immediately. */
+  .no-js .reveal {
+    opacity: 1;
+    transform: none;
+  }
+  /* Same for users who prefer reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    .reveal {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+  }
+
+  /* ---------- the moment (inline 3 cards) ---------- */
+  .moment-card {
+    background: #fff;
+    border: 1px solid var(--rule-lt);
+    border-radius: 22px;
+    padding: 22px;
+    margin-bottom: 12px;
+  }
+  .moment-card .n {
+    font-family: var(--mono);
+    color: var(--hot);
+    font-size: 11px;
+    margin-bottom: 12px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+  }
+  .moment-card h3 {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: 22px;
+    line-height: 1.1;
+    margin-bottom: 10px;
+    letter-spacing: -0.015em;
+    font-variation-settings: "opsz" 144;
+  }
+  .moment-card p {
+    font-size: 14px;
+    line-height: 1.55;
+    color: var(--muted-lt);
+  }
+
+  /* ---------- vision callout (full bleed dark with serif statement) ---------- */
+  .vision-statement {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: clamp(32px, 9vw, 42px);
+    line-height: 1.08;
+    letter-spacing: -0.02em;
+    color: var(--paper);
+    font-variation-settings: "opsz" 144;
+  }
+  .vision-statement em {
+    color: var(--hot);
+    font-style: italic;
+    font-weight: 500;
+  }
+
+  /* pillar mini-row at bottom of vision */
+  .pillar-mini {
+    margin-top: 36px;
+    border-top: 1px solid var(--rule);
+    padding-top: 22px;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  .pillar-mini .row {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+  }
+  .pillar-mini .row .roman {
+    font-family: var(--mono);
+    color: var(--hot);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    width: 28px;
+    flex-shrink: 0;
+  }
+  .pillar-mini .row .text strong {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: 17px;
+    color: var(--paper);
+    margin-right: 8px;
+    font-variation-settings: "opsz" 144;
+  }
+  .pillar-mini .row .text span {
+    font-size: 12px;
+    color: var(--muted);
+  }
+
+  /* differentiator footnote */
+  .footnote {
+    margin-top: 32px;
+    padding-top: 18px;
+    border-top: 1px solid var(--rule-lt);
+    font-size: 12px;
+    color: var(--muted-lt);
+    line-height: 1.5;
+  }
+  .footnote .label {
+    font-family: var(--mono);
+    color: var(--hot);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    font-size: 10px;
+    margin-right: 6px;
+  }
+  section.dark .footnote { border-top-color: var(--rule); color: var(--muted); }
+
+  /* ============================================================
+     MOBILE OVERRIDES (placed last so they win the cascade).
+     On mobile we kill the desktop phone frame entirely and let
+     the document scroll natively. iOS Safari has known issues
+     with nested scroll containers + 100vh, so we avoid both.
+     ============================================================ */
+  @media (max-width: 768px) {
+    html, body {
+      height: auto;
+      min-height: 100%;
+      background: var(--paper);
+    }
+    body {
+      overflow-y: auto;
+    }
+    .stage {
+      padding: 0;
+      min-height: auto;
+      background: var(--paper);
+      display: block;
+      align-items: stretch;
+      justify-content: stretch;
+    }
+    .stage-meta, .stage-hint { display: none; }
+    .phone {
+      width: 100%;
+      height: auto;
+      max-height: none;
+      border-radius: 0;
+      padding: 0;
+      box-shadow: none;
+      background: var(--paper);
+    }
+    .phone::before { display: none; }
+    .screen {
+      border-radius: 0;
+      width: 100%;
+      height: auto;
+      overflow: visible;
+      background: var(--paper);
+    }
+    .app {
+      height: auto;
+      overflow: visible;
+      width: 100%;
+    }
+    /* status bar and nav: fixed to viewport, NOT sticky inside an inner scroller */
+    .status-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      width: 100%;
+      padding-top: max(env(safe-area-inset-top, 12px), 12px);
+      height: calc(54px + env(safe-area-inset-top, 0px));
+      z-index: 100;
+    }
+    .nav {
+      position: fixed;
+      top: calc(54px + env(safe-area-inset-top, 0px));
+      left: 0;
+      right: 0;
+      width: 100%;
+      z-index: 99;
+    }
+    /* push cover content down to clear the fixed status bar + nav */
+    .cover {
+      padding-top: calc(98px + env(safe-area-inset-top, 0px) + 60px);
+      min-height: calc(100vh - 100px);
+      min-height: calc(100svh - 100px);
+    }
+    /* sections after cover need a top buffer for nav clearance on jump-to */
+    section:not(.cover) {
+      scroll-margin-top: calc(98px + env(safe-area-inset-top, 0px));
+    }
+    /* drop nav blur on iOS (perf + occasional rendering glitches) */
+    .nav {
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
+      background: rgba(250, 250, 247, 0.96);
+    }
+    .nav.dark {
+      background: rgba(10, 10, 11, 0.96);
+    }
+  }
+
+</style>
+</head>
+<body>
+
+<div class="stage-meta">
+  <strong>Platoon</strong> &middot; A Vision &middot; <span id="hostname">private</span>
+</div>
+<div class="stage-hint">
+  Open on iPhone for the full experience &middot; tap calendar events to expand
+</div>
+
+<div class="stage">
+  <div class="phone">
+    <div class="screen">
+      <div class="app" id="app">
+
+        <!-- iOS status bar -->
+        <div class="status-bar" id="statusBar">
+          <span class="time" id="clock">9:41</span>
+          <span class="right">
+            <!-- signal -->
+            <svg width="17" height="11" viewBox="0 0 17 11" fill="currentColor"><rect x="0" y="7" width="3" height="4" rx="0.5"/><rect x="4.5" y="5" width="3" height="6" rx="0.5"/><rect x="9" y="2.5" width="3" height="8.5" rx="0.5"/><rect x="13.5" y="0" width="3" height="11" rx="0.5"/></svg>
+            <!-- wifi -->
+            <svg width="15" height="11" viewBox="0 0 15 11" fill="currentColor"><path d="M7.5 0C4.6 0 1.94 1.06 0 2.83l1.43 1.43C3.04 2.83 5.18 1.94 7.5 1.94s4.46.89 6.07 2.32L15 2.83C13.06 1.06 10.4 0 7.5 0zm0 3.88c-2.04 0-3.92.71-5.36 1.88l1.43 1.43c1.07-.84 2.43-1.37 3.93-1.37s2.86.53 3.93 1.37l1.43-1.43C11.42 4.59 9.54 3.88 7.5 3.88zm0 3.87c-1.16 0-2.25.41-3.04 1.13L7.5 11l3.04-2.12C9.75 8.16 8.66 7.75 7.5 7.75z"/></svg>
+            <!-- battery -->
+            <svg width="27" height="12" viewBox="0 0 27 12" fill="none">
+              <rect x="0.5" y="0.5" width="22" height="11" rx="2.5" stroke="currentColor" stroke-opacity="0.5"/>
+              <rect x="2" y="2" width="19" height="8" rx="1.5" fill="currentColor"/>
+              <rect x="24" y="4" width="2" height="4" rx="1" fill="currentColor" fill-opacity="0.5"/>
+            </svg>
+          </span>
+        </div>
+
+        <!-- Sticky nav -->
+        <div class="nav" id="nav">
+          <span class="nav-mark">PLATOON</span>
+          <span class="nav-meta">Vision &middot; v1</span>
+        </div>
+
+        <!-- COVER -->
+        <section class="cover">
+          <div>
+            <div class="eyebrow reveal" style="--d: 100ms; color: var(--muted)">
+              <span class="num">00</span><span>OPENING</span>
+            </div>
+            <h1 class="cover-headline reveal" style="--d: 250ms">
+              My vision<br/>for <em>Platoon</em>.
+            </h1>
+            <p class="cover-sub reveal" style="--d: 500ms">
+              Distribution is the floor. The ceiling is artist development inside the world's most powerful consumer ecosystem, built on tech that doesn't exist yet.
+            </p>
+          </div>
+          <div class="cover-foot reveal" style="--d: 750ms">
+            <span>May 2026</span>
+            <span>scroll &darr;</span>
+          </div>
+          <div class="scroll-cue"><span>scroll</span><span class="arrow"></span></div>
+        </section>
+        <div class="home-indicator" style="background:var(--ink)"><div class="bar"></div></div>
+
+        <!-- THE MOMENT -->
+        <section>
+          <div class="eyebrow reveal"><span class="num">01</span><span>The Moment</span></div>
+          <h2 class="section-title reveal" style="--d:80ms">Platoon was built for a different era.</h2>
+          <p class="lede reveal" style="--d:160ms">
+            Founded 2016. Acquired by Apple 2018. The thesis (find emerging artists, give them tools and capital, get out of the way) was right for its time. Today, three forces have changed what "artist services" should mean.
+          </p>
+
+          <div class="moment-card reveal" style="--d:220ms">
+            <div class="n">i.</div>
+            <h3>AI collapses A&amp;R</h3>
+            <p>Anyone with a laptop can find a viral artist. Scouting on TikTok metrics is now table stakes &mdash; and a commodity.</p>
+          </div>
+          <div class="moment-card reveal" style="--d:300ms">
+            <div class="n">ii.</div>
+            <h3>Distribution is a race to zero</h3>
+            <p>DistroKid, TuneCore, UnitedMasters. Margins compress. Differentiation has to come from what happens after upload.</p>
+          </div>
+          <div class="moment-card reveal" style="--d:380ms">
+            <div class="n">iii.</div>
+            <h3>Fans want ownership, not feeds</h3>
+            <p>Substack, Patreon, Discord, group chats. The relationship between artist and fan is moving direct &mdash; and Apple owns the device.</p>
+          </div>
+        </section>
+        <div class="home-indicator"><div class="bar"></div></div>
+
+        <!-- AUDIT -->
+        <section class="warm">
+          <div class="eyebrow reveal"><span class="num">02</span><span>Audit</span></div>
+          <h2 class="section-title reveal" style="--d:80ms">Strong assets. Thin tech.</h2>
+          <p class="lede reveal" style="--d:160ms">What Platoon has, and what's missing.</p>
+
+          <div class="panel reveal" style="--d:220ms">
+            <div class="panel-label">Has</div>
+            <div class="item-row">
+              <div class="item-marker check">
+                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              </div>
+              <div class="item-text"><strong>Distribution</strong><span>Global pipes. Apple Music Pre-Add, Fitness+, YouTube monetisation.</span></div>
+            </div>
+            <div class="item-row">
+              <div class="item-marker check">
+                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              </div>
+              <div class="item-text"><strong>Recording studios</strong><span>Tileyard HQ, Cape Town Creative Lab.</span></div>
+            </div>
+            <div class="item-row">
+              <div class="item-marker check">
+                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              </div>
+              <div class="item-text"><strong>Ownership-light deals</strong><span>Minority stake model. Artists keep their rights.</span></div>
+            </div>
+            <div class="item-row">
+              <div class="item-marker check">
+                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              </div>
+              <div class="item-text"><strong>Apple, the parent</strong><span>Capital. Editorial. Beats 1. Shazam. Devices.</span></div>
+            </div>
+            <div class="item-row">
+              <div class="item-marker check">
+                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              </div>
+              <div class="item-text"><strong>Platoon for Artists app</strong><span>Promote / Analyze / Earn. Invite-only iOS dashboard.</span></div>
+            </div>
+          </div>
+
+          <div class="panel dark reveal" style="--d:300ms">
+            <div class="panel-label">Missing</div>
+            <div class="item-row">
+              <div class="item-marker square"></div>
+              <div class="item-text"><strong>A&amp;R signal layer</strong><span>No proprietary discovery. Same TikTok charts everyone watches.</span></div>
+            </div>
+            <div class="item-row">
+              <div class="item-marker square"></div>
+              <div class="item-text"><strong>Career planning OS</strong><span>Dashboard shows yesterday. Nothing maps the next 36 months.</span></div>
+            </div>
+            <div class="item-row">
+              <div class="item-marker square"></div>
+              <div class="item-text"><strong>Marketing automation</strong><span>No ad tech. Spend isn't tied to live signal.</span></div>
+            </div>
+            <div class="item-row">
+              <div class="item-marker square"></div>
+              <div class="item-text"><strong>Direct-to-fan rails</strong><span>No commerce layer between artist and listener on Apple devices.</span></div>
+            </div>
+            <div class="item-row">
+              <div class="item-marker square"></div>
+              <div class="item-text"><strong>Cross-Apple orchestration</strong><span>Syncs, ads, Fitness+, Shazam. All manual, all relationship-driven.</span></div>
+            </div>
+          </div>
+        </section>
+        <div class="home-indicator"><div class="bar"></div></div>
+
+        <!-- VISION -->
+        <section class="dark">
+          <div class="eyebrow reveal"><span class="num">03</span><span>The Vision</span></div>
+          <p class="vision-statement reveal" style="--d:80ms">
+            Platoon should not compete to <em>find</em> artists.
+            <br/><br/>
+            It should compete to <em>build</em> them, using assets no one else has.
+          </p>
+          <div class="pillar-mini reveal" style="--d:300ms">
+            <div class="row">
+              <span class="roman">I.</span>
+              <div class="text"><strong>Ecosystem A&amp;R</strong><span>Sign for leverage, not for hype.</span></div>
+            </div>
+            <div class="row">
+              <span class="roman">II.</span>
+              <div class="text"><strong>The artist OS</strong><span>A 36-month tech stack, automated.</span></div>
+            </div>
+            <div class="row">
+              <span class="roman">III.</span>
+              <div class="text"><strong>Direct-to-fan</strong><span>Apple devices as the commerce layer.</span></div>
+            </div>
+          </div>
+        </section>
+        <div class="home-indicator" style="background:var(--ink)"><div class="bar"></div></div>
+
+        <!-- PILLAR I -->
+        <section>
+          <div class="eyebrow reveal"><span class="num">04</span><span>Pillar I &middot; Ecosystem A&amp;R</span></div>
+          <h2 class="section-title reveal" style="--d:80ms">Sign for leverage, not for hype.</h2>
+          <p class="lede reveal" style="--d:160ms">
+            Stop signing the same artists every label is chasing on TikTok. Sign artists where Apple's ecosystem is the unfair advantage. Every signing comes with a 3-5 year plan, mapped to specific services.
+          </p>
+
+          <div class="ecosystem reveal" style="--d:220ms">
+            <div class="ecosystem-hub">
+              <div class="label">ARTIST</div>
+              <h4>3-5 yr plan</h4>
+              <small>mapped to Apple's services</small>
+            </div>
+            <div class="surfaces">
+              <div class="surface">
+                <span class="icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="13" rx="2"/><path d="M8 21h8M12 17v4"/></svg></span>
+                Apple TV+ syncs
+              </div>
+              <div class="surface">
+                <span class="icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 0 1 18 0v3a3 3 0 0 1-3 3h-1v-7h4M3 18h1v-7H3"/></svg></span>
+                Fitness+ workouts
+              </div>
+              <div class="surface">
+                <span class="icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.5 5.5L19 10l-5.5 1.5L12 17l-1.5-5.5L5 10l5.5-1.5L12 3z"/></svg></span>
+                Shazam charts &amp; ads
+              </div>
+              <div class="surface">
+                <span class="icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M8 8a5 5 0 0 1 8 0M5 16a8 8 0 0 1 14 0"/></svg></span>
+                Beats Radio + editorial
+              </div>
+              <div class="surface">
+                <span class="icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="2" width="12" height="20" rx="2.5"/><circle cx="12" cy="18" r="1" fill="currentColor"/></svg></span>
+                Device launches &amp; ads
+              </div>
+              <div class="surface">
+                <span class="icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="11" r="3.5"/><path d="M5 11a7 7 0 0 1 14 0M12 14.5V21"/></svg></span>
+                Apple Podcasts crossover
+              </div>
+            </div>
+          </div>
+
+          <div class="footnote reveal" style="--d:320ms">
+            <span class="label">Differentiator</span>
+            Every other label signs and hopes. Platoon signs and <em>schedules</em>.
+          </div>
+        </section>
+        <div class="home-indicator"><div class="bar"></div></div>
+
+        <!-- PILLAR II - the OS centerpiece -->
+        <section class="warm">
+          <div class="eyebrow reveal"><span class="num">05</span><span>Pillar II &middot; The Artist OS</span></div>
+          <h2 class="section-title reveal" style="--d:80ms">Give every signed artist the best techstack in music.</h2>
+
+          <!-- the OS mockup -->
+          <div class="os-shell reveal" style="--d:160ms">
+            <div class="chrome">
+              <div class="dots">
+                <span class="dot" style="background:#FF4E3A"></span>
+                <span class="dot" style="background:#FFB020"></span>
+                <span class="dot" style="background:#5AC85A"></span>
+              </div>
+              <span>platoon.app &middot; jorja smith</span>
+              <span>&middot;&middot;&middot;</span>
+            </div>
+            <div class="os-screen">
+              <div class="os-meta">CAMPAIGN CALENDAR &middot; OCTOBER 2026</div>
+              <div class="os-title">Album 2 build <em>&rarr;</em> global breakout</div>
+
+              <div class="cal-grid" id="cal">
+                <div class="cal-h">M</div><div class="cal-h">T</div><div class="cal-h">W</div><div class="cal-h">T</div><div class="cal-h">F</div><div class="cal-h">S</div><div class="cal-h">S</div>
+                <!-- Oct 2026: 1st = Thursday -->
+                <!-- cells filled by JS for cleanliness -->
+              </div>
+
+              <div class="cal-legend">
+                <span><span class="sw" style="background:var(--hot)"></span>live</span>
+                <span><span class="sw" style="background:var(--amber)"></span>queued</span>
+                <span><span class="sw" style="background:#383840"></span>planned</span>
+                <span style="margin-left:auto; color:var(--hot); font-style:italic;">tap to expand &rsaquo;</span>
+              </div>
+
+              <!-- event detail panel - revealed on tap -->
+              <div class="event-detail" id="eventDetail">
+                <div class="ed-meta" id="edMeta"></div>
+                <div class="ed-title" id="edTitle"></div>
+                <div class="ed-body" id="edBody"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="os-features">
+            <div class="os-feature reveal" style="--d:80ms">
+              <h4>Auto-plans 36 months</h4>
+              <p>Career arc, milestone-by-milestone, editable in real time.</p>
+            </div>
+            <div class="os-feature reveal" style="--d:160ms">
+              <h4>One calendar, every team</h4>
+              <p>Manager, label, sync agent, tour, PR. All on the same view. No more email threads.</p>
+            </div>
+            <div class="os-feature reveal" style="--d:240ms">
+              <h4>Triggers spend on virality</h4>
+              <p>Marketing budget held until a track shows traction. Then deployed automatically.</p>
+            </div>
+            <div class="os-feature reveal" style="--d:320ms">
+              <h4>Routes opportunities</h4>
+              <p>Sync briefs, Fitness+ slots, Beats specials matched and offered to artists with one tap.</p>
+            </div>
+          </div>
+        </section>
+        <div class="home-indicator"><div class="bar"></div></div>
+
+        <!-- PILLAR III -->
+        <section class="dark">
+          <div class="eyebrow reveal"><span class="num">06</span><span>Pillar III &middot; Direct-to-Fan</span></div>
+          <h2 class="section-title reveal" style="--d:80ms" >Apple owns the device. Build the <em>commerce layer</em> between artist and fan.</h2>
+          <p class="lede reveal" style="--d:160ms">
+            D2F is the dominant trend in artist economics: Patreon, Substack, Discord, group chats. Apple is the only company that can build it natively into 2bn+ devices via iMessage, Wallet, and Apple Pay. Platoon should be the artist services arm that ships it.
+          </p>
+
+          <div class="pillar-card reveal" style="--d:220ms">
+            <div class="num">i.</div>
+            <h3>The fan rail</h3>
+            <p>Native fan inboxes via iMessage Business. Drops, presales, voice notes, ticket priority. Direct from artist, opt-in by fan.</p>
+          </div>
+          <div class="pillar-card reveal" style="--d:300ms">
+            <div class="num">ii.</div>
+            <h3>Co-owned data</h3>
+            <p>Apple privacy-first. Artist sees fan signal (city, listening, engagement). Fan stays anonymous. Platoon gets the aggregate layer.</p>
+          </div>
+          <div class="pillar-card reveal" style="--d:380ms">
+            <div class="num">iii.</div>
+            <h3>Revenue share</h3>
+            <p>Tiered partnership deals: distribution-only, services-plus, or full 360 with D2F. Platoon takes a cut of fan-driven revenue, not just streams.</p>
+          </div>
+
+          <div class="footnote reveal" style="--d:460ms">
+            <span class="label">The win</span>
+            Apple positions itself as the most artist-friendly home in music, and earns recurring revenue beyond streaming.
+          </div>
+        </section>
+        <div class="home-indicator" style="background:var(--ink)"><div class="bar"></div></div>
+
+        <!-- COMPETITIVE -->
+        <section>
+          <div class="eyebrow reveal"><span class="num">07</span><span>Competitive Position</span></div>
+          <h2 class="section-title reveal" style="--d:80ms">Why this wins.</h2>
+          <p class="lede reveal" style="--d:160ms">
+            Every player in the artist services market is fighting on price or hustle. None of them have what Platoon has, and what's proposed here can't be replicated.
+          </p>
+
+          <div class="compare reveal" style="--d:220ms">
+            <table>
+              <thead>
+                <tr>
+                  <th>Capability</th>
+                  <th>UM</th>
+                  <th>AWAL</th>
+                  <th>Believe</th>
+                  <th class="us">Platoon</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td class="label">Distribution</td><td><span class="marker-cell"></span></td><td><span class="marker-cell"></span></td><td><span class="marker-cell"></span></td><td><span class="marker-cell us"></span></td></tr>
+                <tr><td class="label">Editorial leverage</td><td><span class="marker-cell half"></span></td><td><span class="marker-cell half"></span></td><td><span class="marker-cell half"></span></td><td><span class="marker-cell us"></span></td></tr>
+                <tr><td class="label">Capital + 360</td><td><span class="marker-cell half"></span></td><td><span class="marker-cell"></span></td><td><span class="marker-cell"></span></td><td><span class="marker-cell us"></span></td></tr>
+                <tr><td class="label">A&amp;R signal layer</td><td><span class="marker-cell empty"></span></td><td><span class="marker-cell half"></span></td><td><span class="marker-cell half"></span></td><td><span class="marker-cell us"></span></td></tr>
+                <tr><td class="label">Career planning OS</td><td><span class="marker-cell empty"></span></td><td><span class="marker-cell empty"></span></td><td><span class="marker-cell empty"></span></td><td><span class="marker-cell us"></span></td></tr>
+                <tr><td class="label">Direct-to-fan rails</td><td><span class="marker-cell half"></span></td><td><span class="marker-cell empty"></span></td><td><span class="marker-cell empty"></span></td><td><span class="marker-cell us"></span></td></tr>
+              </tbody>
+            </table>
+            <div class="compare-legend">
+              <span><span class="marker-cell" style="width:10px;height:10px"></span>full</span>
+              <span><span class="marker-cell half" style="width:10px;height:10px"></span>partial</span>
+              <span><span class="marker-cell empty" style="width:10px;height:10px"></span>none</span>
+            </div>
+          </div>
+        </section>
+        <div class="home-indicator"><div class="bar"></div></div>
+
+        <!-- HORIZON -->
+        <section class="warm">
+          <div class="eyebrow reveal"><span class="num">08</span><span>Horizon</span></div>
+          <h2 class="section-title reveal" style="--d:80ms">Three years to make Platoon the most envied label in music.</h2>
+
+          <div class="year-card reveal" style="--d:160ms">
+            <div class="top"></div>
+            <div class="body">
+              <div class="label">Year 1</div>
+              <h3>Re-platform.</h3>
+              <ul>
+                <li>Ship Artist OS v1 to existing roster.</li>
+                <li>Onboard managers, sync agents, label teams onto a single calendar.</li>
+                <li>Run first 5 ecosystem-orchestrated campaigns.</li>
+                <li>Quietly sign 10 cohort artists on new deal tiers.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="year-card reveal" style="--d:240ms">
+            <div class="top"></div>
+            <div class="body">
+              <div class="label">Year 2</div>
+              <h3>Prove leverage.</h3>
+              <ul>
+                <li>First 'made by Platoon' breakout, driven by sync + Beats + automated spend.</li>
+                <li>D2F pilot via iMessage Business with 3 artists.</li>
+                <li>Open Artist OS to select third-party managers.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="year-card reveal" style="--d:320ms">
+            <div class="top"></div>
+            <div class="body">
+              <div class="label">Year 3</div>
+              <h3>Re-set the market.</h3>
+              <ul>
+                <li>The destination for emerging artists who want Apple's full force.</li>
+                <li>D2F live across roster, recurring fan revenue.</li>
+                <li>Major labels approach for distribution + tooling licensing.</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+        <div class="home-indicator"><div class="bar"></div></div>
+
+        <!-- CLOSE -->
+        <section class="close">
+          <div class="eyebrow reveal" style="color:var(--muted)"><span class="num">09</span><span>Close</span></div>
+          <h1 class="reveal" style="--d:80ms">These are <em>my thoughts</em>.</h1>
+          <p class="happy reveal" style="--d:240ms">Happy to discuss.</p>
+          <p class="email reveal" style="--d:340ms"><a href="mailto:Alex@unhurd.com">Alex@unhurd.com</a></p>
+        </section>
+        <div class="home-indicator" style="background:var(--ink)"><div class="bar"></div></div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // ---------- live clock in status bar ----------
+  function tickClock() {
+    const el = document.getElementById('clock');
+    if (!el) return;
+    const d = new Date();
+    let h = d.getHours();
+    const m = d.getMinutes();
+    el.textContent = `${h}:${m.toString().padStart(2,'0')}`;
+  }
+  tickClock();
+  setInterval(tickClock, 30 * 1000);
+
+  // ---------- hostname (just a tiny "feels real" detail in the desktop label) ----------
+  try {
+    document.getElementById('hostname').textContent = window.location.hostname || 'private';
+  } catch(_) {}
+
+  // ---------- intersection-based reveal-on-scroll ----------
+  const app = document.getElementById('app');
+  const isMobileLayout = () => window.matchMedia('(max-width: 768px)').matches;
+  // On mobile we use the document as the scroll context; on desktop we use the inner .app
+  const scrollEl = isMobileLayout() ? document.scrollingElement || document.documentElement : app;
+  const ioRoot   = isMobileLayout() ? null : app;
+
+  const reveals = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('in');
+        io.unobserve(e.target);
+      }
+    });
+  }, { root: ioRoot, rootMargin: '0px 0px -8% 0px', threshold: 0.01 });
+  reveals.forEach(r => io.observe(r));
+  // Fire cover reveals immediately on load
+  document.querySelectorAll('.cover .reveal').forEach(r => {
+    setTimeout(() => r.classList.add('in'), 50);
+  });
+  // Safety net: any reveal that's already onscreen at any point gets shown
+  function checkVisibleReveals() {
+    const vh = window.innerHeight;
+    document.querySelectorAll('.reveal:not(.in)').forEach(r => {
+      const rect = r.getBoundingClientRect();
+      if (rect.top < vh + 80 && rect.bottom > 0) {
+        r.classList.add('in');
+      }
+    });
+  }
+  setTimeout(checkVisibleReveals, 200);
+
+  // Use the right scroll source for events
+  const scrollTarget = isMobileLayout() ? window : app;
+  scrollTarget.addEventListener('scroll', () => {
+    requestAnimationFrame(checkVisibleReveals);
+  }, { passive: true });
+
+  // ---------- nav state on scroll (color flip + scroll shadow) ----------
+  const nav = document.getElementById('nav');
+  const status = document.getElementById('statusBar');
+  const sections = Array.from(document.querySelectorAll('section'));
+
+  function updateChrome() {
+    const mobile = isMobileLayout();
+    const scrollTop = mobile ? (window.scrollY || document.documentElement.scrollTop) : app.scrollTop;
+    nav.classList.toggle('scrolled', scrollTop > 8);
+
+    // Find which section is currently at the top of the viewport (just below nav)
+    const probeY = mobile ? 110 + (window.visualViewport?.offsetTop || 0) : 110;
+    let activeSection = null;
+    for (const s of sections) {
+      const r = s.getBoundingClientRect();
+      const top = mobile ? r.top : (r.top - app.getBoundingClientRect().top);
+      if (top <= probeY && top + r.height > probeY) {
+        activeSection = s;
+        break;
+      }
+    }
+    const isDark = activeSection && (activeSection.classList.contains('dark') || activeSection.classList.contains('cover') || activeSection.classList.contains('close'));
+    nav.classList.toggle('dark', !!isDark);
+    status.classList.toggle('dark', !!isDark);
+  }
+  scrollTarget.addEventListener('scroll', updateChrome, { passive: true });
+  // also on resize, in case orientation changes between mobile/desktop
+  window.addEventListener('resize', updateChrome, { passive: true });
+  updateChrome();
+
+  // ---------- build calendar (Oct 2026) ----------
+  const cal = document.getElementById('cal');
+  // events: day -> {kind, title, body, meta}
+  const events = {
+    6:  { kind: 'live',    chip: 'Beats',  title: "Beats Radio premiere", meta: "Mon Oct 6 \u00b7 LIVE",  body: "World-first play of single 'Lifeline' on Apple Music 1, hosted by Zane Lowe. Pre-add link goes live 6am PT, push to 4.2M followers." },
+    9:  { kind: 'live',    chip: 'TV+',    title: "Apple TV+ sync \u2014 'Slow Horses' S5",  meta: "Thu Oct 9 \u00b7 LIVE",  body: "Closing scene of episode 3. Track credits page in app. Sync royalty + 8-week boosted Apple Music carousel placement." },
+    14: { kind: 'queued',  chip: 'Fit+',   title: "Fitness+ HIIT slot", meta: "Tue Oct 14 \u00b7 QUEUED", body: "4 tracks across two HIIT sessions in the Oct release wave. Trainer mentions artist by name in intro. Estimated reach: 2.1M sessions." },
+    17: { kind: 'queued',  chip: 'Shaz',   title: "Shazam Predictions ad buy", meta: "Fri Oct 17 \u00b7 QUEUED", body: "\u20ac40k spend triggered automatically when 'Lifeline' Shazam velocity passes 5k/day. Targets US, UK, DE." },
+    22: { kind: 'planned', chip: 'Tour',   title: "Tour announcement", meta: "Wed Oct 22 \u00b7 PLANNED", body: "EU + UK leg. Apple Wallet pre-sale priority for opted-in fans on the rail. Ticketmaster integration via Apple Pay." },
+    27: { kind: 'planned', chip: 'iMsg',   title: "iMessage drop", meta: "Mon Oct 27 \u00b7 PLANNED", body: "First exclusive voice note + acoustic stem to fan rail subscribers. Opens 30-day window for cover-art remix submissions." },
+    30: { kind: 'live',    chip: 'Single', title: "Single release \u2014 'Lifeline'", meta: "Fri Oct 30 \u00b7 LIVE", body: "Global midnight release. Pre-add at 1.8M. Apple Music carousel + New Music Daily cover. Fan rail gets the music video 24h early." },
+  };
+
+  const startOffset = 3; // Oct 1, 2026 = Thursday (Mon=0)
+  const totalCells = 35;
+  const days = 31;
+
+  // pre-create cells via DOM
+  const frag = document.createDocumentFragment();
+  for (let i = 0; i < totalCells; i++) {
+    const cell = document.createElement('div');
+    const dayNum = i - startOffset + 1;
+    const inMonth = dayNum >= 1 && dayNum <= days;
+    if (!inMonth) {
+      cell.className = 'cal-cell empty';
+    } else if (events[dayNum]) {
+      const ev = events[dayNum];
+      cell.className = 'cal-cell has-event';
+      cell.dataset.day = dayNum;
+      cell.innerHTML = `<span class="day">${dayNum}</span><span class="chip ${ev.kind}">${ev.chip}</span>`;
+    } else {
+      cell.className = 'cal-cell';
+      cell.innerHTML = `<span class="day">${dayNum}</span>`;
+    }
+    frag.appendChild(cell);
+  }
+  cal.appendChild(frag);
+
+  // event tap handler
+  const detail = document.getElementById('eventDetail');
+  const edMeta  = document.getElementById('edMeta');
+  const edTitle = document.getElementById('edTitle');
+  const edBody  = document.getElementById('edBody');
+
+  let activeCell = null;
+  cal.addEventListener('click', (e) => {
+    const cell = e.target.closest('.cal-cell.has-event');
+    if (!cell) return;
+    const day = parseInt(cell.dataset.day, 10);
+    const ev = events[day];
+    if (!ev) return;
+
+    // toggle off if same cell
+    if (activeCell === cell) {
+      detail.classList.remove('show');
+      cell.style.borderColor = 'transparent';
+      activeCell = null;
+      return;
+    }
+    if (activeCell) activeCell.style.borderColor = 'transparent';
+    activeCell = cell;
+    cell.style.borderColor = 'rgba(255,78,58,0.6)';
+
+    edMeta.textContent  = ev.meta;
+    edTitle.textContent = ev.title;
+    edBody.textContent  = ev.body;
+    detail.classList.remove('show');
+    // re-trigger animation
+    requestAnimationFrame(() => detail.classList.add('show'));
+  });
+
+  // ---------- soft, subtle parallax-like effect on cover headline ----------
+  // (Apple-style: cover text shifts slightly opposite to scroll for a touch of depth)
+  const coverHeadline = document.querySelector('.cover-headline');
+  const coverSub      = document.querySelector('.cover-sub');
+  if (coverHeadline) {
+    scrollTarget.addEventListener('scroll', () => {
+      const top = isMobileLayout() ? (window.scrollY || 0) : app.scrollTop;
+      const t = Math.min(top, 600);
+      const f = t / 600;
+      coverHeadline.style.transform = `translateY(${f * -22}px)`;
+      coverHeadline.style.opacity = `${1 - f * 0.85}`;
+      if (coverSub) {
+        coverSub.style.transform = `translateY(${f * -16}px)`;
+        coverSub.style.opacity = `${1 - f * 0.9}`;
+      }
+    }, { passive: true });
+  }
+</script>
+
+</body>
+</html>
