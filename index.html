@@ -1121,6 +1121,369 @@
   }
   .tier-arrow .arrow-up { color: var(--hot); font-size: 14px; }
 
+  /* callout cards (used in Pillar I and Pillar III for added context) */
+  .callout-card {
+    background: var(--paper-2);
+    border-radius: 18px;
+    padding: 22px 22px 20px;
+    margin-top: 14px;
+    border-left: 3px solid var(--hot);
+  }
+  section.dark .callout-card {
+    background: var(--graph);
+    border-left-color: var(--hot);
+  }
+  .callout-card .callout-eyebrow {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--hot);
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+  .callout-card h4 {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 1.15;
+    letter-spacing: -0.015em;
+    margin-bottom: 10px;
+    color: var(--ink);
+    font-variation-settings: "opsz" 144;
+  }
+  section.dark .callout-card h4 { color: var(--paper); }
+  .callout-card p {
+    font-size: 13.5px;
+    line-height: 1.55;
+    color: var(--muted-lt);
+  }
+  section.dark .callout-card p { color: var(--muted); }
+  .callout-card p + p { margin-top: 8px; }
+  .callout-card p strong {
+    color: var(--ink);
+    font-weight: 600;
+  }
+  section.dark .callout-card p strong { color: var(--paper); }
+  .callout-card .callout-source {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.05em;
+    color: var(--muted);
+    margin-top: 12px;
+  }
+
+  /* why-now numbered cards */
+  .why-card {
+    background: #fff;
+    border: 1px solid var(--rule-lt);
+    border-radius: 22px;
+    padding: 26px 24px 22px;
+    margin-bottom: 12px;
+    position: relative;
+  }
+  .why-card .why-num {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--hot);
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    margin-bottom: 12px;
+  }
+  .why-card h3 {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: 22px;
+    line-height: 1.15;
+    letter-spacing: -0.015em;
+    color: var(--ink);
+    margin-bottom: 10px;
+    font-variation-settings: "opsz" 144;
+  }
+  .why-card p {
+    font-size: 13.5px;
+    line-height: 1.55;
+    color: var(--muted-lt);
+  }
+  .why-card p + p { margin-top: 8px; }
+  .why-card .callout-source {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--muted);
+    margin-top: 12px;
+    letter-spacing: 0.03em;
+  }
+
+  /* ============================================================
+     ANTSLIVE walkthrough - cinematic vertical comic strip.
+     Each "scene" is a panel with device art + caption.
+     ============================================================ */
+  .antslive {
+    background: #0A0A0B;
+    background-image:
+      radial-gradient(ellipse at 30% 0%, rgba(255, 78, 58, 0.10), transparent 50%),
+      radial-gradient(ellipse at 70% 100%, rgba(255, 78, 58, 0.06), transparent 60%),
+      #0A0A0B;
+    overflow: hidden;
+  }
+  .antslive .section-title { color: var(--paper); }
+  .antslive .section-title em { color: var(--hot); }
+
+  .scene {
+    margin-top: 32px;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 18px;
+  }
+  .scene-phase {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--hot);
+    font-weight: 600;
+  }
+  .scene-art {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 22px;
+    padding: 28px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(250, 250, 247, 0.92);
+    min-height: 200px;
+    position: relative;
+    overflow: hidden;
+  }
+  .scene-art svg {
+    width: 100%;
+    max-width: 240px;
+    height: auto;
+    color: rgba(250, 250, 247, 0.92);
+  }
+  .scene-art::before {
+    /* subtle film grain feel */
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(180deg, rgba(255, 78, 58, 0.04), transparent 30%);
+    pointer-events: none;
+  }
+  .scene-body h3 {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    color: var(--paper);
+    margin-bottom: 10px;
+    font-variation-settings: "opsz" 144;
+  }
+  .scene-body h3 em {
+    color: var(--hot);
+    font-style: italic;
+  }
+  .scene-body p {
+    font-size: 14px;
+    line-height: 1.55;
+    color: var(--muted);
+  }
+
+  /* filmstrip-style rule between scenes */
+  .scene-rule {
+    margin: 36px auto 0;
+    width: 100px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255, 78, 58, 0.45), transparent);
+  }
+
+  /* the closing "the pattern" payoff after all scenes */
+  .scene-payoff {
+    margin-top: 56px;
+    padding: 28px 24px 30px;
+    border-radius: 22px;
+    background: linear-gradient(
+      135deg,
+      rgba(255, 78, 58, 0.18),
+      rgba(255, 78, 58, 0.04) 70%
+    );
+    border: 1px solid rgba(255, 78, 58, 0.30);
+  }
+  .scene-payoff-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--hot);
+    font-weight: 600;
+    margin-bottom: 12px;
+  }
+  .scene-payoff p {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: 17px;
+    line-height: 1.45;
+    color: var(--paper);
+    letter-spacing: -0.005em;
+    font-variation-settings: "opsz" 144;
+  }
+  .scene-payoff p strong {
+    font-weight: 500;
+    color: var(--paper);
+  }
+
+  /* compact phase card - used for phases without a full hero visual.
+     Dark glass surface, phase label, headline, beat list, small icon row. */
+  .phase-card {
+    margin-top: 32px;
+    padding: 26px 24px 24px;
+    background: rgba(255, 255, 255, 0.025);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-radius: 22px;
+  }
+  .phase-card .scene-phase {
+    margin-bottom: 14px;
+  }
+  .phase-card h3 {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    color: var(--paper);
+    margin-bottom: 14px;
+    font-variation-settings: "opsz" 144;
+  }
+  .phase-card h3 em {
+    color: var(--hot);
+    font-style: italic;
+  }
+  .phase-card .beats {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 18px 0;
+  }
+  .phase-card .beats li {
+    font-size: 13.5px;
+    line-height: 1.55;
+    color: var(--muted);
+    padding: 6px 0 6px 18px;
+    position: relative;
+  }
+  .phase-card .beats li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 14px;
+    width: 10px;
+    height: 2px;
+    background: var(--hot);
+  }
+  .phase-card .beats li strong {
+    color: var(--paper);
+    font-weight: 600;
+  }
+  /* small touchpoint icon row at bottom of phase card */
+  .touchpoints {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-top: 6px;
+    padding-top: 16px;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+  }
+  .touchpoint {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 0.05em;
+    padding: 6px 10px;
+    background: rgba(255, 78, 58, 0.08);
+    border: 1px solid rgba(255, 78, 58, 0.20);
+    border-radius: 999px;
+    color: rgba(250, 250, 247, 0.9);
+  }
+  .touchpoint svg {
+    width: 13px;
+    height: 13px;
+    color: var(--hot);
+    flex-shrink: 0;
+  }
+
+  /* hero phase card - has a visual artwork on the right side */
+  .phase-card.hero .hero-art {
+    background: rgba(0, 0, 0, 0.25);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 14px;
+    padding: 18px 16px;
+    margin: 14px 0 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 160px;
+  }
+  .phase-card.hero .hero-art svg {
+    width: 100%;
+    max-width: 340px;
+    height: auto;
+    color: rgba(250, 250, 247, 0.92);
+  }
+
+
+  /* unlock grid - shown in Pillar III to demonstrate cross-Apple integrations */
+  .unlock-grid {
+    margin-top: 14px;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+  .unlock {
+    background: var(--graph);
+    border: 1px solid var(--rule);
+    border-radius: 14px;
+    padding: 16px 18px;
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+  }
+  .unlock-icon {
+    flex-shrink: 0;
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    background: rgba(255, 78, 58, 0.12);
+    color: var(--hot);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .unlock-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .unlock-body strong {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: 17px;
+    color: var(--paper);
+    letter-spacing: -0.01em;
+    font-variation-settings: "opsz" 144;
+  }
+  .unlock-body span {
+    font-size: 12.5px;
+    line-height: 1.45;
+    color: var(--muted);
+  }
+
   /* the unifying "one OS" footer pill */
   .one-os {
     margin-top: 8px;
@@ -1276,7 +1639,7 @@
               <span class="num">00</span><span>OPENING</span>
             </div>
             <h1 class="cover-headline reveal" style="--d: 250ms">
-              Platoon can evolve into the <em>cultural leader</em>.
+              Platoon will <em>shape culture</em>, not just exist in it.
             </h1>
             <p class="cover-sub reveal" style="--d: 500ms">
               Distribution is the floor. The ceiling is artist development inside the world's most powerful consumer ecosystem, built on tech that doesn't exist yet.
@@ -1289,37 +1652,11 @@
         </section>
         <div class="home-indicator" style="background:var(--ink)"><div class="bar"></div></div>
 
-        <!-- THE MOMENT -->
-        <section>
-          <div class="eyebrow reveal"><span class="num">01</span><span>The Moment</span></div>
-          <h2 class="section-title reveal" style="--d:80ms">Platoon was built for a different era.</h2>
-          <p class="lede reveal" style="--d:160ms">
-            Founded 2016. Acquired in 2018. Today, three forces have changed what "artist services" should mean, and Platoon have the resources to adapt to all three faster than anyone else.
-          </p>
-
-          <div class="moment-card reveal" style="--d:220ms">
-            <div class="n">i.</div>
-            <h3>AI collapses A&amp;R</h3>
-            <p>Anyone with a laptop can find a viral artist. Scouting on TikTok metrics is now table stakes - and a commodity.</p>
-          </div>
-          <div class="moment-card reveal" style="--d:300ms">
-            <div class="n">ii.</div>
-            <h3>Distribution is a race to zero</h3>
-            <p>DistroKid, TuneCore, UnitedMasters. Margins compress. Differentiation has to come from what happens after upload.</p>
-          </div>
-          <div class="moment-card reveal" style="--d:380ms">
-            <div class="n">iii.</div>
-            <h3>Fans want ownership, not feeds</h3>
-            <p>Substack, Patreon, Discord, group chats. The relationship between artist and fan is moving direct - and Apple owns the device.</p>
-          </div>
-        </section>
-        <div class="home-indicator"><div class="bar"></div></div>
-
         <!-- AUDIT -->
         <section class="warm">
-          <div class="eyebrow reveal"><span class="num">02</span><span>Audit</span></div>
+          <div class="eyebrow reveal"><span class="num">01</span><span>Audit</span></div>
           <h2 class="section-title reveal" style="--d:80ms">Strong assets. Thin tech.</h2>
-          <p class="lede reveal" style="--d:160ms">What Platoon has, and what's missing.</p>
+          <p class="lede reveal" style="--d:160ms">Founded 2016. Acquired in 2018. Built for a different era. Here's what Platoon has, and what's missing.</p>
 
           <div class="panel reveal" style="--d:220ms">
             <div class="panel-label">Has</div>
@@ -1378,12 +1715,17 @@
               <div class="item-text"><strong>Cross-Apple orchestration</strong><span>Syncs, ads, Fitness+, Shazam. All manual, all relationship-driven.</span></div>
             </div>
           </div>
+
+          <div class="footnote reveal" style="--d:520ms">
+            <span class="label">Why now</span>
+            Spotify's grip on artists has slipped, fan communities now hold the power, and music's growth has moved south and east. The window to take a different position is open. It will not stay open for long.
+          </div>
         </section>
         <div class="home-indicator"><div class="bar"></div></div>
 
         <!-- VISION -->
         <section class="dark">
-          <div class="eyebrow reveal"><span class="num">03</span><span>The Vision</span></div>
+          <div class="eyebrow reveal"><span class="num">02</span><span>The Vision</span></div>
           <p class="vision-statement reveal" style="--d:80ms">
             Platoon should not compete to <em>find</em> artists.
             <br/><br/>
@@ -1408,10 +1750,10 @@
 
         <!-- PILLAR I -->
         <section>
-          <div class="eyebrow reveal"><span class="num">04</span><span>Pillar I &middot; Ecosystem A&amp;R</span></div>
+          <div class="eyebrow reveal"><span class="num">03</span><span>Pillar I &middot; Ecosystem A&amp;R</span></div>
           <h2 class="section-title reveal" style="--d:80ms">Sign for leverage, not for hype.</h2>
           <p class="lede reveal" style="--d:160ms">
-            Sign artists where Apple's ecosystem is the unfair advantage. Every signing comes with a 3-5 year plan, mapped to specific services.
+            Sign content-savvy artists where Apple's ecosystem is the unfair advantage. We don't just sign musicians, we sign artist-creators for whom content is a core strand of the work. Every signing comes with a 3-5 year plan, mapped to specific services.
           </p>
 
           <div class="ecosystem reveal" style="--d:220ms">
@@ -1448,7 +1790,7 @@
             </div>
           </div>
 
-          <div class="footnote reveal" style="--d:320ms">
+          <div class="footnote reveal" style="--d:280ms">
             <span class="label">Differentiator</span>
             Every other label signs and hopes. Platoon signs and <em>schedules</em>.
           </div>
@@ -1457,7 +1799,7 @@
 
         <!-- PILLAR II - the OS centerpiece -->
         <section class="warm">
-          <div class="eyebrow reveal"><span class="num">05</span><span>Pillar II &middot; The Artist OS</span></div>
+          <div class="eyebrow reveal"><span class="num">04</span><span>Pillar II &middot; The Artist OS</span></div>
           <h2 class="section-title reveal" style="--d:80ms">Give every signed artist the best techstack in music.</h2>
 
           <!-- the OS mockup -->
@@ -1520,31 +1862,288 @@
 
         <!-- PILLAR III -->
         <section class="dark">
-          <div class="eyebrow reveal"><span class="num">06</span><span>Pillar III &middot; Direct-to-Fan</span></div>
-          <h2 class="section-title reveal" style="--d:80ms" >Apple owns the device. Build the <em>commerce layer</em> between artist and fan.</h2>
+          <div class="eyebrow reveal"><span class="num">05</span><span>Pillar III &middot; Direct-to-Fan</span></div>
+          <h2 class="section-title reveal" style="--d:80ms" >Platoon builds the <em>commerce layer</em> between artist and fan, on the devices Apple already owns.</h2>
           <p class="lede reveal" style="--d:160ms">
-            D2F is the dominant trend in artist economics: Patreon, Substack, Discord, group chats. Apple is the only company that can build it natively into 2bn+ devices via iMessage, Wallet, and Apple Pay. Platoon should be the artist services arm that ships it.
+            D2F is the dominant trend in artist economics: Patreon, Substack, Discord, group chats. No artist services company can ship it natively into 2bn+ devices. Platoon can, by building on iMessage, Wallet, and Apple Pay. This is how Platoon becomes the rail every artist wants to be on.
           </p>
 
           <div class="pillar-card reveal" style="--d:220ms">
             <div class="num">i.</div>
             <h3>The fan rail</h3>
-            <p>Native fan inboxes via iMessage Business. Drops, presales, voice notes, ticket priority. Direct from artist, opt-in by fan.</p>
+            <p>Native fan inboxes via iMessage Business. Drops, presales, voice notes, ticket priority. Direct from artist, opt-in by fan. Owned by Platoon, sat on rails Apple controls.</p>
           </div>
           <div class="pillar-card reveal" style="--d:300ms">
             <div class="num">ii.</div>
             <h3>Co-owned data</h3>
-            <p>Apple privacy-first. Artist sees fan signal (city, listening, engagement). Fan stays anonymous. Platoon gets the aggregate layer.</p>
+            <p>Apple-grade privacy. Artist sees fan signal (city, listening, engagement). Fan stays anonymous. Platoon owns the aggregate layer, the only company in music with a clean view across the rail.</p>
           </div>
           <div class="pillar-card reveal" style="--d:380ms">
             <div class="num">iii.</div>
             <h3>Revenue share</h3>
-            <p>Tiered partnership deals: distribution-only, services-plus, or full 360 with D2F. Platoon takes a cut of fan-driven revenue, not just streams.</p>
+            <p>Tiered partnership deals: distribution-only, services-plus, or full 360 with D2F. Platoon takes a cut of fan-driven revenue, not just streams. The economics of a label, the margin profile of a platform.</p>
           </div>
 
-          <div class="footnote reveal" style="--d:460ms">
+          <!-- What the fan rail unlocks: cross-app Apple ecosystem integrations -->
+          <div class="callout-card reveal" style="--d:440ms">
+            <div class="callout-eyebrow">What opt-in unlocks</div>
+            <h4>Once a fan opts in, every Apple surface becomes a Platoon-orchestrated touchpoint.</h4>
+            <p>The fan rail is the consent layer. Once the fan has opted in via iMessage Business, Platoon's OS orchestrates the rest of Apple's surfaces around them, with their permission, never beyond it.</p>
+          </div>
+
+          <div class="unlock-grid reveal" style="--d:480ms">
+            <div class="unlock">
+              <div class="unlock-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-7.5-7-12a7 7 0 0 1 14 0c0 4.5-7 12-7 12z"/><circle cx="12" cy="9.5" r="2.5"/></svg>
+              </div>
+              <div class="unlock-body">
+                <strong>Maps</strong>
+                <span>Fan walks past a venue, gets a notification: their artist is playing here tomorrow. Triggered by listening history + Shazam, opt-in only.</span>
+              </div>
+            </div>
+            <div class="unlock">
+              <div class="unlock-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 9h18M8 3v4M16 3v4"/></svg>
+              </div>
+              <div class="unlock-body">
+                <strong>Calendar</strong>
+                <span>Tour dates, release days, livestream premieres auto-populate the fan's calendar. With reminders. With one-tap ticket links.</span>
+              </div>
+            </div>
+            <div class="unlock">
+              <div class="unlock-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h12a4 4 0 0 1 4 4v12H8a4 4 0 0 1-4-4V4z"/><path d="M8 9h8M8 13h8M8 17h5"/></svg>
+              </div>
+              <div class="unlock-body">
+                <strong>Apple News</strong>
+                <span>Artist's interviews, features, long-reads surface in News for opted-in fans. Editorial and commerce in the same feed.</span>
+              </div>
+            </div>
+            <div class="unlock">
+              <div class="unlock-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg>
+              </div>
+              <div class="unlock-body">
+                <strong>Safari</strong>
+                <span>Drop pages, fan portals, and ticket flows checkout via Apple Pay (no forms, Face ID confirms). Tickets and membership credentials drop straight into Wallet. The fan is recognised as opted-in, the artist site greets them by tier, all without a single login screen.</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="footnote reveal" style="--d:540ms">
             <span class="label">The win</span>
-            Apple positions itself as the most artist-friendly home in music, and earns recurring revenue beyond streaming.
+            Platoon becomes the most artist-friendly home in music, and earns recurring revenue beyond streaming. Apple gets the only artist services company building natively for its ecosystem.
+          </div>
+        </section>
+        <div class="home-indicator" style="background:var(--ink)"><div class="bar"></div></div>
+
+        <!-- ANTSLIVE WALKTHROUGH -->
+        <section class="dark antslive">
+          <div class="eyebrow reveal"><span class="num">06</span><span>Case Study &middot; A Day In The Life</span></div>
+          <h2 class="section-title reveal" style="--d:80ms">If <em>ANTSLIVE</em> were a Platoon artist.</h2>
+          <p class="lede reveal" style="--d:160ms">
+            One artist. One album cycle. Every Apple touchpoint, working as a single system. This is what the vision looks like in motion.
+          </p>
+
+          <!-- 4-PHASE COMPRESSED WALKTHROUGH -->
+
+          <!-- PHASE 01: CREATE -->
+          <div class="phase-card reveal" style="--d:220ms">
+            <div class="scene-phase">Phase 01 &middot; Create</div>
+            <h3>The track is born on <em>Apple devices</em>.</h3>
+            <ul class="beats">
+              <li><strong>iPad</strong> for the demo. <strong>MacBook Pro</strong> in Logic for the cut. Mastered for Apple Digital Masters.</li>
+              <li><strong>Beats headphones</strong> on every social post, every studio session, every BTS clip. Not sponsorship. Visual identity.</li>
+              <li>The Artist OS files the track against the 36-month plan and surfaces a sync brief he wouldn't have known existed.</li>
+            </ul>
+            <div class="touchpoints">
+              <span class="touchpoint">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="11" y1="18" x2="13" y2="18"/></svg>
+                iPad
+              </span>
+              <span class="touchpoint">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M2 20h20"/></svg>
+                MacBook Pro
+              </span>
+              <span class="touchpoint">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12a7 7 0 0 1 14 0v3"/><rect x="3" y="13" width="4" height="6" rx="1.5"/><rect x="17" y="13" width="4" height="6" rx="1.5"/></svg>
+                Beats
+              </span>
+              <span class="touchpoint">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3"/></svg>
+                Artist OS
+              </span>
+            </div>
+          </div>
+
+          <div class="scene-rule"></div>
+
+          <!-- PHASE 02: AMPLIFY -->
+          <div class="phase-card reveal" style="--d:300ms">
+            <div class="scene-phase">Phase 02 &middot; Amplify</div>
+            <h3>The break, on <em>Apple Music 1</em>.</h3>
+            <ul class="beats">
+              <li><strong>Zane Lowe premieres the single</strong> on his show. Full interview. The cultural weight Apple paid for in 2015, doing its job.</li>
+              <li><strong>His own monthly Beats Radio show.</strong> He hosts. Brings his friends, his influences, the artists he wants to put on. The cohort starts feeding the radio.</li>
+              <li><strong>The track lands as an Apple TV+ sync.</strong> Closing scene of a marquee drama. Track credits in-app, 8-week boosted Apple Music carousel placement. Sync royalty plus the ecosystem amplifier.</li>
+            </ul>
+            <div class="touchpoints">
+              <span class="touchpoint">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><line x1="12" y1="3" x2="12" y2="21"/><path d="M3 12c0-2.5 4-9 9-9s9 6.5 9 9-4 9-9 9-9-6.5-9-9z"/></svg>
+                Apple Music 1
+              </span>
+              <span class="touchpoint">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="3" width="6" height="12" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg>
+                The Zane Lowe Show
+              </span>
+              <span class="touchpoint">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M8 8a5 5 0 0 1 8 0M5 16a8 8 0 0 1 14 0"/></svg>
+                Beats Radio
+              </span>
+              <span class="touchpoint">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="13" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+                Apple TV+ sync
+              </span>
+            </div>
+          </div>
+
+          <div class="scene-rule"></div>
+
+          <!-- PHASE 03: CONNECT (with Maps hero visual) -->
+          <div class="phase-card hero reveal" style="--d:380ms">
+            <div class="scene-phase">Phase 03 &middot; Connect</div>
+            <h3>From Shazam to ticket sale in <em>60 seconds</em>.</h3>
+            <div class="hero-art">
+              <svg viewBox="0 0 320 240" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <!-- map background with subtle terrain feel -->
+                <defs>
+                  <linearGradient id="mapBg" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0" stop-color="#1a2530"/>
+                    <stop offset="1" stop-color="#0f1620"/>
+                  </linearGradient>
+                  <filter id="cardShadow" x="-20%" y="-20%" width="140%" height="140%">
+                    <feGaussianBlur in="SourceAlpha" stdDeviation="3"/>
+                    <feOffset dx="0" dy="2" result="offsetblur"/>
+                    <feFlood flood-color="#000" flood-opacity="0.4"/>
+                    <feComposite in2="offsetblur" operator="in"/>
+                    <feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
+                  </filter>
+                </defs>
+                <rect x="10" y="10" width="300" height="220" rx="22" fill="url(#mapBg)" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+
+                <!-- subtle map roads -->
+                <g stroke="rgba(255,255,255,0.10)" stroke-width="0.75" fill="none">
+                  <path d="M 10 70 Q 80 60 160 80 T 310 95"/>
+                  <path d="M 10 130 Q 90 145 180 135 T 310 145"/>
+                  <path d="M 10 190 Q 100 200 200 195 T 310 200"/>
+                  <line x1="80" y1="10" x2="100" y2="230"/>
+                  <line x1="200" y1="10" x2="220" y2="230"/>
+                </g>
+                <g stroke="rgba(255,255,255,0.04)" stroke-width="0.5" fill="none">
+                  <path d="M 10 40 Q 60 35 140 50 T 310 55"/>
+                  <path d="M 10 100 Q 80 95 180 105 T 310 115"/>
+                </g>
+
+                <!-- park / area shapes -->
+                <path d="M 40 50 Q 70 40 100 55 Q 110 80 90 95 Q 60 100 45 80 Z" fill="rgba(80,140,90,0.18)"/>
+                <path d="M 220 30 Q 260 35 280 60 Q 270 85 240 75 Z" fill="rgba(80,140,90,0.12)"/>
+
+                <!-- pin (location) -->
+                <g filter="url(#cardShadow)">
+                  <path d="M 160 65 C 150 65 142 73 142 83 C 142 95 160 118 160 118 C 160 118 178 95 178 83 C 178 73 170 65 160 65 Z" fill="#FF4E3A"/>
+                  <circle cx="160" cy="83" r="5" fill="#0A0A0B"/>
+                </g>
+
+                <!-- pulse ring around pin -->
+                <circle cx="160" cy="83" r="14" fill="none" stroke="#FF4E3A" stroke-width="0.75" opacity="0.5"/>
+                <circle cx="160" cy="83" r="22" fill="none" stroke="#FF4E3A" stroke-width="0.5" opacity="0.25"/>
+
+                <!-- bottom card - sized properly to fit text -->
+                <g filter="url(#cardShadow)">
+                  <rect x="20" y="148" width="280" height="76" rx="14" fill="rgba(20,20,24,0.96)" stroke="rgba(255,255,255,0.10)" stroke-width="0.75"/>
+                </g>
+
+                <!-- LIVE indicator dot + label -->
+                <circle cx="38" cy="167" r="3.5" fill="#FF4E3A"/>
+                <text x="48" y="170" font-family="'JetBrains Mono', monospace" font-size="8.5" fill="#FF4E3A" letter-spacing="1.5" font-weight="600">TONIGHT &middot; 9PM</text>
+
+                <!-- venue name - the hero text, on its own line -->
+                <text x="34" y="190" font-family="'Inter', sans-serif" font-weight="600" font-size="14" fill="#FAFAF7">ANTSLIVE</text>
+
+                <!-- subtitle on second line -->
+                <text x="34" y="207" font-family="'Inter', sans-serif" font-weight="400" font-size="11" fill="rgba(250,250,247,0.65)">Brixton Academy &middot; 0.4 mi away</text>
+
+                <!-- tickets button on the right -->
+                <rect x="216" y="174" width="74" height="26" rx="13" fill="#FF4E3A"/>
+                <text x="253" y="191" text-anchor="middle" font-family="'Inter', sans-serif" font-weight="600" font-size="10" fill="#0A0A0B" letter-spacing="0.3">Get tickets</text>
+              </svg>
+            </div>
+            <ul class="beats">
+              <li><strong>Fans live on the rail.</strong> Voice notes, drop reminders, presale links via iMessage Business. No algorithm in between.</li>
+              <li><strong>Shazam triggers Maps.</strong> Fan recognises the track at a party. Walks home. Maps surfaces the show half a mile away. Apple Pay, one tap.</li>
+            </ul>
+            <div class="touchpoints">
+              <span class="touchpoint">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-9 8.5 8.5 8.5 0 0 1-7.6-4.7L3 21l1.9-3.6A8.38 8.38 0 0 1 3 11.5a8.5 8.5 0 0 1 17 0z"/></svg>
+                iMessage
+              </span>
+              <span class="touchpoint">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v8M8 12h8"/></svg>
+                Shazam
+              </span>
+              <span class="touchpoint">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-7.5-7-12a7 7 0 0 1 14 0c0 4.5-7 12-7 12z"/><circle cx="12" cy="9.5" r="2.5"/></svg>
+                Maps
+              </span>
+              <span class="touchpoint">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="14" rx="3"/><path d="M2 12h20"/></svg>
+                Apple Pay
+              </span>
+            </div>
+          </div>
+
+          <div class="scene-rule"></div>
+
+          <!-- PHASE 04: PREMIERE (with Apple TV+ hero visual) -->
+          <div class="phase-card hero reveal" style="--d:460ms">
+            <div class="scene-phase">Phase 04 &middot; Premiere</div>
+            <h3>One take. Premieres on <em>Apple TV+</em>.</h3>
+            <div class="hero-art">
+              <svg viewBox="0 0 220 160" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <rect x="20" y="14" width="180" height="110" rx="6" fill="rgba(250,250,247,0.03)" stroke="currentColor" stroke-width="1.5"/>
+                <rect x="26" y="20" width="168" height="98" rx="3" fill="rgba(0,0,0,0.5)"/>
+                <circle cx="110" cy="60" r="14" fill="none" stroke="#FF4E3A" stroke-width="1.5"/>
+                <path d="M 106 54 L 106 66 L 116 60 Z" fill="#FF4E3A"/>
+                <text x="110" y="92" text-anchor="middle" font-family="JetBrains Mono" font-weight="600" font-size="7" fill="#FF4E3A" letter-spacing="2">PREMIERING TONIGHT</text>
+                <text x="110" y="106" text-anchor="middle" font-family="Inter" font-weight="600" font-size="11" fill="#FAFAF7">ANTSLIVE: ONE TAKE</text>
+                <line x1="100" y1="124" x2="120" y2="124" stroke="currentColor" stroke-width="2"/>
+                <line x1="80" y1="138" x2="140" y2="138" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <ul class="beats">
+              <li><strong>Every frame, shot on iPhone Pro.</strong> Music video, behind-the-scenes, social cutdowns. Native vertical. Joined to the Shot on iPhone campaign.</li>
+              <li><strong>Full-length feature performance, one take.</strong> World premiere on Apple TV+ &amp; Apple Music. iTunes download next morning. YouTube two weeks later, after Apple's window has done its work.</li>
+            </ul>
+            <div class="touchpoints">
+              <span class="touchpoint">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="2" width="12" height="20" rx="2.5"/><circle cx="12" cy="18" r="1" fill="currentColor"/></svg>
+                iPhone Pro
+              </span>
+              <span class="touchpoint">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="13" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+                Apple TV+
+              </span>
+              <span class="touchpoint">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9 8l7 4-7 4V8z"/></svg>
+                iTunes
+              </span>
+            </div>
+          </div>
+
+          <!-- payoff -->
+          <div class="scene-payoff reveal" style="--d:780ms">
+            <div class="scene-payoff-label">The Pattern</div>
+            <p>Every artist on the Cohort gets a journey designed at this resolution. Not because Platoon hand-builds each one, but because the OS does the orchestration, and the team stays focused on what humans uniquely add. <strong>This is what 'shaping culture' actually looks like.</strong></p>
           </div>
         </section>
         <div class="home-indicator" style="background:var(--ink)"><div class="bar"></div></div>
@@ -1552,17 +2151,17 @@
         <!-- TWO TIERS -->
         <section class="warm">
           <div class="eyebrow reveal"><span class="num">07</span><span>Two Tiers, One OS</span></div>
-          <h2 class="section-title reveal" style="--d:80ms">Curate at the top. Build a <em>platform</em> underneath.</h2>
+          <h2 class="section-title reveal" style="--d:80ms">Curate at the top. <em>Scale</em> the discovery underneath.</h2>
           <p class="lede reveal" style="--d:160ms">
-            A boutique-only label limits its own ambition. The same Artist OS that develops a curated cohort can serve thousands of independents, with technology doing the lifting humans can't scale to. Two distinct products, one tech stack, one feeder pipeline.
+            A small, deeply-backed cohort at the top, signed by humans. A larger platform underneath, fed by two parallel routes: artist submission, and an internal discovery tool. Same criteria gate both. Same Artist OS powers both tiers. Two distinct products, one standard.
           </p>
 
           <div class="tier-stack">
             <div class="tier-card cohort reveal" style="--d:220ms">
               <div class="label">Tier 1 &middot; The Cohort</div>
-              <div class="vol">~10 artists / year</div>
+              <div class="vol">10 artists / year. Held lean by design.</div>
               <h3>Apple's prestige roster.</h3>
-              <p class="desc">Hand-picked. Heavy human touch. Apple's full ecosystem behind every signing.</p>
+              <p class="desc">Hand-picked content-savvy artist-creators. Heavy human touch. Apple's full ecosystem behind every signing. The team can buy in fully because the bar is genuinely high.</p>
               <ul>
                 <li><strong>Bespoke 3-5 year plans</strong> mapped to TV+, Fitness+, Beats, Shazam, devices.</li>
                 <li><strong>Significant capital</strong> behind each artist for production, touring, marketing.</li>
@@ -1579,20 +2178,21 @@
 
             <div class="tier-card platform reveal" style="--d:340ms">
               <div class="label">Tier 2 &middot; The Platform</div>
-              <div class="vol">500+ artists / year, scaling to thousands</div>
-              <h3>Tech-led artist development.</h3>
-              <p class="desc">Open application. Same Artist OS. Algorithmic routing. Humans intervene only where the data justifies it.</p>
+              <div class="vol">Two routes in. One curation bar.</div>
+              <h3>Tech-led A&amp;R, at scale.</h3>
+              <p class="desc">Away from the cohort, the A&amp;R discovery piece is scalable. Two parallel feeders bring artists in: a submission portal where artists put themselves forward, and a proprietary discovery tool the A&amp;R team uses internally. Both are gated by the same criteria.</p>
               <ul>
-                <li><strong>Self-serve onboarding</strong> with the same OS the cohort uses.</li>
-                <li><strong>Automated opportunity routing</strong>: sync briefs, playlist pitching, marketing spend triggered when traction crosses thresholds.</li>
-                <li><strong>Artists who break through graduate up</strong>. The platform is the cohort's discovery engine.</li>
+                <li><strong>The Platform (artist-facing)</strong>: a public submission portal. Artists apply directly. Criteria-gated, not open self-serve.</li>
+                <li><strong>The discovery tool (internal)</strong>: A&amp;R team's instrument for surfacing emerging artists across streaming, socials, Shazam, live data, and scenes humans aren't watching.</li>
+                <li><strong>Core criteria as the curation layer</strong>: a defined bar (creative quality, content fluency, momentum) gates entry from either route.</li>
+                <li><strong>Standout Platform artists graduate to the Cohort.</strong> The Platform is the proving ground.</li>
               </ul>
             </div>
           </div>
 
           <div class="one-os reveal" style="--d:420ms">
-            <span class="pill">One OS</span>
-            <span class="body"><strong>The same product powers both tiers.</strong> That's what makes the volume play economically sane and strategically coherent. The OS investment pays for itself twice.</span>
+            <span class="pill">One Standard</span>
+            <span class="body"><strong>Same OS, same bar, both tiers.</strong> Apple doesn't ship anything mediocre. Neither should the label inside it. The Cohort is curated by people. The Platform is curated by criteria. Both are curated.</span>
           </div>
         </section>
         <div class="home-indicator"><div class="bar"></div></div>
@@ -1650,13 +2250,11 @@
             <div class="top"></div>
             <div class="body">
               <div class="label">Year 1</div>
-              <h3>Re-platform.</h3>
+              <h3>Build the foundation.</h3>
               <ul>
-                <li>Ship Artist OS v1 to existing roster.</li>
-                <li>Onboard managers, sync agents, label teams onto a single calendar.</li>
-                <li>Run first 5 ecosystem-orchestrated campaigns.</li>
-                <li>Quietly sign 10 cohort artists on new deal tiers.</li>
-                <li>Open Platform tier in private beta to 100 hand-picked independents.</li>
+                <li>Sign the first 10 Cohort artists on new deal tiers.</li>
+                <li>Ship Artist OS v1. The Cohort is its first user.</li>
+                <li>Build and launch the first 5 ecosystem-orchestrated campaigns.</li>
               </ul>
             </div>
           </div>
@@ -1667,10 +2265,10 @@
               <div class="label">Year 2</div>
               <h3>Prove leverage.</h3>
               <ul>
-                <li>First 'made by Platoon' cohort breakout, driven by sync + Beats + automated spend.</li>
-                <li>Platform tier opens publicly. Scale to 1,000+ independent artists.</li>
-                <li>First Platform-to-Cohort graduation (an artist signal-promoted into full Apple support).</li>
-                <li>D2F pilot via iMessage Business with 3 artists.</li>
+                <li>First Cohort breakout driven by ecosystem orchestration.</li>
+                <li>Launch the Platform tier: artists submit, criteria-gated entry. Scale to 1,000 artists.</li>
+                <li>Launch the proprietary discovery tool internally. Platoon's A&amp;R team surfaces emerging artists at scale.</li>
+                <li>First Platform-to-Cohort graduation. The two-tier model works as one system.</li>
               </ul>
             </div>
           </div>
@@ -1679,12 +2277,11 @@
             <div class="top"></div>
             <div class="body">
               <div class="label">Year 3</div>
-              <h3>Re-set the market.</h3>
+              <h3>Reset the market.</h3>
               <ul>
-                <li>The destination for emerging artists who want Apple's full force.</li>
-                <li>Platform tier at scale. The largest tech-led discovery engine in music.</li>
-                <li>D2F live across both tiers, recurring fan revenue.</li>
-                <li>Major labels approach for distribution + tooling licensing.</li>
+                <li>Platoon is the destination for content-savvy artists who want Apple's full force.</li>
+                <li>D2F live across both tiers. Recurring fan revenue is a real line on the P&amp;L.</li>
+                <li>Major labels approach for distribution and tooling licensing.</li>
               </ul>
             </div>
           </div>
